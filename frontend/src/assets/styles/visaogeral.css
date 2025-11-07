@@ -1,0 +1,157 @@
+/* --- Geral do Dashboard (Mantido do código anterior) --- */
+
+.dashboard-container {
+    padding: 30px 12%;
+    background-color: #f7f9fc; 
+    padding-top: 100px;
+}
+
+.dashboard-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: var(--color-texto-escuro);
+}
+
+.dashboard-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.filter-button {
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-button.dropdown {
+    background-color: #fff;
+    color: var(--color-texto-cinza);
+    border: 1px solid #e0e0e0;
+}
+
+.filter-button.dropdown.active {
+    border-color: #3682be;
+}
+
+.filter-button.primary {
+    background-color: var(--color-azul-secundario); 
+    color: #fff;
+    border: 1px solid var(--color-azul-secundario);
+}
+
+.arrow {
+    font-size: 10px;
+    margin-left: 5px;
+    transition: transform 0.3s ease-out;
+}
+
+.filter-button.active .arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-container {
+    position: relative; 
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    max-height: 0;
+    opacity: 0;
+    overflow-y: auto;
+    max-width: 300px;
+    min-width: 180px;
+    
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out; 
+}
+
+.dropdown-menu.show {
+    max-height: 300px;
+    opacity: 1;
+    padding: 5px 0;
+}
+
+.dropdown-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-texto-escuro);
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item.selected {
+    background-color: #e0e0ff;
+    font-weight: 600;
+    color: var(--color-azul-primario);
+}
+
+.dashboard-metrics-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.metric-card, .update-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    min-height: 120px;
+}
+.metric-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.metric-icon-title {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    gap: 10px;
+    color: var(--color-texto-cinza);
+}
+.metric-value {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(  --color-azul-secundario); 
+    margin-top: 10px;
+}
+.update-card {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / 2;
+}
+.update-title {
+    font-size: 16px;
+    color: var( --color-texto-cinza);
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.update-date {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-azul-secundario);
+}
+.icon {
+    font-size: 1.5rem;
+    padding: 2px;
+}
