@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 
-from schemas import authSchema, gerais
+from schemas import authSchema, httpError
 from security import auth, password
 
 router = APIRouter(
@@ -15,8 +15,8 @@ router = APIRouter(
         '/',
         responses= {
             401: {
-                'model': gerais.HTTPError,
-                'description': 'Incorrect email or password'
+                'model': httpError.HTTPError,
+                'description': 'Email ou senha incorretos'
             }
         },
         response_model= authSchema.Token

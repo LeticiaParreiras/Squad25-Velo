@@ -13,5 +13,10 @@ app.include_router(demanda.router)
 
 #  exemplo de uma rota protegida:
 @app.get('/')
-def teste(t: Annotated[authSchema.Usuario, Depends(auth.verificar_autenticacao)]):
+def teste(t: Annotated[authSchema.Usuario, Depends(auth.autenticar)]):
     return 'acesso autorizado'
+
+#  exemplo de uma rota adm protegida:
+@app.get('/admin')
+def teste(t: Annotated[authSchema.Usuario, Depends(auth.autenticar_adm)]):
+    return 'acesso do adm autorizado'
