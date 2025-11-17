@@ -1,18 +1,23 @@
 from fastapi import FastAPI, Depends
-from routers import login
-from routers import demanda
+from routers import login, demanda, simec, censo
 
 from typing import Annotated
 from schemas import authSchema
 from security import auth
+from utils import responses
 
 app = FastAPI()
 
 app.include_router(login.router)
 app.include_router(demanda.router)
+app.include_router(simec.router)
+app.include_router(censo.router)
 
 #  exemplo de uma rota protegida:
-@app.get('/')
+@app.get(
+        '/',
+        responses=responses.AUTH_RESPONSES
+    )
 def teste(t: Annotated[authSchema.Usuario, Depends(auth.autenticar)]):
     return 'acesso autorizado'
 
