@@ -17,7 +17,7 @@ const useLoginForm = () => {
     setTimeout(() => {
       if (email === "gestor@siged.com" && password === "12345") {
         console.log("Login bem-sucedido!");
-        navigate("/homepage");
+        navigate("/adminpage");
       } else {
         setError("Credenciais inválidas. Tente novamente.");
       }

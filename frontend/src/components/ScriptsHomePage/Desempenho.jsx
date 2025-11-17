@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TbMobiledata } from "react-icons/tb";
 import { TbReload } from "react-icons/tb";
-import "../../assets/styles/desempenho.css";
+import "../../styles/StylesHomePage/desempenho.css";
 
 const dadosDesempenho = [
   { label: "Matemática", percent: 37, color: "#3682be" },

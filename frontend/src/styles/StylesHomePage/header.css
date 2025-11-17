@@ -1,11 +1,11 @@
 #header {
-    width: 100%;
-    padding: 20px 12%;
-    max-height: 80px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25);
-    position: fixed;
-    z-index: 10;
+  width: 100%;
+  padding: 20px 12%;
+  min-height: 80px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25);
+  position: fixed;
+  z-index: 10;
 }
 
 #navbar {
@@ -19,7 +19,7 @@
   font-weight: 700;
   font-size: 1.5rem;
   display: flex;
-  color: #0B3C5D;
+  color: #0b3c5d;
 }
 
 #nav_logo:hover {
@@ -41,7 +41,7 @@
 
 .btn-perfil {
   padding: 0.5rem 1.5rem;
-  background-color: #3282B8;
+  background-color: #3282b8;
   outline: none;
   border-radius: 0.4rem;
   font-size: 1rem;
@@ -55,6 +55,5 @@
 .btn-perfil:hover {
   transform: scale(1.03);
   color: #f0f4f8;
-  background-color: #3282B8;
+  background-color: #3282b8;
 }
-

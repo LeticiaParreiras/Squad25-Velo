@@ -3,7 +3,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { PiPersonArmsSpread } from "react-icons/pi";
 import { LuSchool } from "react-icons/lu";
 import { BsClipboardData } from "react-icons/bs";
-import "../../assets/styles/visaogeral.css";
+import "../../styles/StylesHomePage/visaogeral.css";
 
 const anosEnem = Array.from({ length: 25 }, (_, i) => 2024 - i);
 
