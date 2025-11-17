@@ -10,7 +10,9 @@ export default function Header() {
           <i id="navlogo">SIGED - Velo</i>
           <div className="navbar-list-container">
             <a href="#contacts">
-              <button className="btn-perfil">Perfil <IoPersonSharp /></button>
+              <button className="btn-perfil">
+                Perfil <IoPersonSharp />
+              </button>
             </a>
           </div>
         </nav>

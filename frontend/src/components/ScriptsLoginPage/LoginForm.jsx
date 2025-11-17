@@ -1,6 +1,6 @@
 import React from "react";
 import useLoginForm from "../../hooks/useLoginForm";
-import "../../assets/styles/login.css";
+import "../../styles/StylesLoginPage/login.css";
 
 const LoginForm = () => {
   const {
@@ -16,7 +16,7 @@ const LoginForm = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1 className="login-title">Velo Escolas</h1>
+        <h1 className="login-title">SIGED - Velo</h1>
         
 
         <form onSubmit={handleSubmit}>

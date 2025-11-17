@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdOutlineDataObject } from "react-icons/md";
-import "../../assets/styles/dadosrecentes.css"; 
+import "../../styles/StylesHomePage/dadosrecentes.css"; 
 
 const dadosRecentes = [
     {
