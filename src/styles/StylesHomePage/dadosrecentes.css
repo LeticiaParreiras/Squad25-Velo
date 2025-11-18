@@ -1,0 +1,69 @@
+:root {
+    --color-success: #1e873a;
+    --color-warning: #f7a01b; 
+}
+
+.recent-data-container {
+    padding: 30px 12%;
+    background-color: #f7f9fc;
+}
+
+.recent-data-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: var(--color-texto-escuro);
+}
+
+.data-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.recent-data-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-texto-cinza);
+    margin: 0 0 15px 0;
+}
+
+.card-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-azul-secundario);
+    margin-bottom: 10px;
+}
+
+.card-description {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.description-icon {
+    font-size: 14px;
+    margin-right: 5px;
+    line-height: 1;
+}
+
+.growth-up, .growth-up-num {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.growth-const, .growth-warning {
+    color: var(--color-warning);
+    font-weight: 600;
+}
