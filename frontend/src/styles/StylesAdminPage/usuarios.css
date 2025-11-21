@@ -1,88 +1,230 @@
+/* DESCRIÇÃO DISCRETA DA PÁGINA - NOVO ESTILO */
+.page-description {
+  text-align: left;
+  font-size: 0.95rem;
+  color: #7f8c8d; /* Cinza discreto */
+  margin-bottom: 5px;
+}
+
+/* CONTAINER PRINCIPAL E TÍTULO */
 .usuarios-container {
-  padding-left: 50px;
-  margin-right: 12%;
-  width: 1400px;
-  margin-top: 150px;
-  margin-left: auto;
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.15));
+  padding: 0px 12%;
+  width: 100%;
+  /* Espaçamento para limpar o cabeçalho (Header) */
+  margin-top: 100px; 
+  margin-bottom: 100px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
 }
 
 .usuarios-container h1 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
+  text-align: center; 
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #0B3C5D;
 }
 
+/* CONTROLES DE BUSCA E FILTRO */
+.controle-tabela {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 15px 0px;
+}
+
+/* BUSCA INPUT */
+.busca-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 800px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+.busca-input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.busca-input:focus {
+  border-color: #3282B8;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(50, 130, 184, 0.2);
+}
+
+/* FILTRO SELECT */
+.filtro-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filtro-wrapper label {
+  font-weight: 600;
+  color: #0B3C5D;
+}
+
+.filtro-select {
+  padding: 10px 15px;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230B3C5D%22%20d%3D%22M287%20197.3l-137.9-137.9c-2.4-2.4-6.2-2.4-8.6%200L3.5%20197.3c-2.4%202.4-2.4%206.2%200%208.6l20%2020c2.4%202.4%206.2%202.4%208.6%200l105.8-105.8%20105.8%20105.8c2.4%202.4%206.2%202.4%208.6%200l20-20c2.4-2.4%202.4-6.2%200-8.6z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 0.6em auto;
+}
+
+.filtro-select:hover {
+    border-color: #3282B8;
+}
+
+/* TABELA DE USUÁRIOS */
 .tabela-usuarios {
   width: 100%;
   border-collapse: collapse;
   background: white;
   border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tabela-usuarios thead {
+    border-bottom: 2px solid #3282B8;
 }
 
 .tabela-usuarios th {
-  background: #c5e1ff;
-  padding: 14px;
+  background: #0B3C5D; /* Mantém a cor original do cabeçalho da tabela */
+  padding: 16px;
   text-align: center;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 0.95rem;
+  color: #fff;
+  text-transform: uppercase;
 }
 
 .tabela-usuarios td {
   padding: 14px;
-  border: 1px solid #e5e5e5;  
-  height: 64px;
-  font-size: 1rem;
+  border-bottom: 1px solid #f0f0f0; 
+  height: 60px;
+  font-size: 0.95rem;
   text-align: center;
+  vertical-align: middle;
 }
 
+.tabela-usuarios tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-usuarios tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.no-results {
+    padding: 30px;
+    text-align: center;
+    font-style: italic;
+    color: #7f8c8d;
+}
+
+/* BADGES DE STATUS (Azul Principal/Neutro) */
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+}
+
+.status-ativa {
+    background-color: #3282B8; /* Azul principal para Ativa */
+}
+
+.status-suspensa {
+    background-color: #95a5a6; /* Cinza claro para Suspensa (Neutro) */
+    color: #0B3C5D;
+}
+
+.status-inativa {
+    background-color: #7f8c8d; /* Cinza escuro para Inativa */
+}
+
+/* AÇÕES */
 .acoes {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .acoes button {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
+  padding: 8px 12px;
   border: none;
   color: white;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9rem;
+  transition: 0.2s;
 }
 
-.btn-editar,
-.btn-suspender,
+/* Estilos de Botões de Ação Específicos */
+.btn-editar {
+  background: #3282B8; /* Voltando ao azul principal */
+}
+
+.btn-suspender {
+  background: #3282B8; /* Mantendo laranja/cobre para Suspender (Aviso padrão) */
+}
+
 .btn-excluir {
-  background: #3282B8;
-  height: 35px;
+  background: #e74c3c; /* Mantendo vermelho para Excluir (Perigo padrão) */
 }
 
-.btn-excluir {
-  padding: 7px 10px;
+/* Efeitos de Hover para Ações */
+.acoes button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* BOTÃO ADICIONAR (Voltando à paleta azul) */
 .btn-add {
   margin-top: 25px;
   padding: 12px 22px;
-  background: #3282B8;
+  background: #3282B8; /* Voltando ao azul principal */
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 10px;
   transition: 0.2s;
+  box-shadow: 0 4px 8px rgba(50, 130, 184, 0.3);
 }
 
 .btn-add:hover {
-  filter: brightness(0.9);
+  background: #2974a4; /* Azul mais escuro no hover */
+  box-shadow: 0 6px 12px rgba(50, 130, 184, 0.4);
 }

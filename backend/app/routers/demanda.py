@@ -26,6 +26,8 @@ async def criar_demanda(demanda: demandas):
         "descricao": demanda.descricao,
         "prioridade": demanda.prioridade,
         "status": demanda.status,
+        "categoria": demanda.categoria,
+        "estimativa_custo": demanda.estimativa_custo,
         "responsavel": demanda.responsavel,
         "data_criacao": agora,
         "data_atualizacao": agora

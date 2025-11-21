@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends
-from routers import login, demanda, simec, censo
+from routers import login, demanda, simec, censo, problema
 
 from typing import Annotated
 from schemas import authSchema
@@ -12,6 +12,7 @@ app.include_router(login.router)
 app.include_router(demanda.router)
 app.include_router(simec.router)
 app.include_router(censo.router)
+app.include_router(problema.router)
 
 #  exemplo de uma rota protegida:
 @app.get(
