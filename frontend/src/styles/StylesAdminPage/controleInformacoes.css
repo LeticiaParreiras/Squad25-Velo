@@ -26,7 +26,7 @@
 }
 
 .controle-description {
-  text-align: left;
+  text-align: center;
   font-size: 0.95rem;
   color: #7f8c8d; /* Cinza discreto */
   margin-bottom: 5px;
@@ -35,10 +35,13 @@
 /* CARD BASE */
 .section-box {
   background: white;
-  padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: 0.2s;
+}
+
+.section-box h3 {
+  padding-left: 14px;
 }
 
 .section-box:hover {
@@ -50,20 +53,25 @@
 }
 
 .controle-section-title {
+  background: #0b3c5d;
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
-  font-weight: 700;
   margin-bottom: 18px;
-  color: #0b3c5d;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 2px solid #3282b8;
   gap: 10px;
+  padding: 16px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fff;
+  text-transform: uppercase;
 }
 
 .list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
+  padding: 14px 14px;
   border-bottom: 1px solid #ecf0f1;
   font-size: 0.95rem;
   color: #0b3c5d;
