@@ -2,3 +2,79 @@
     display: flex;
     justify-content: space-between;
 }
+
+/* --- ESTILOS ESPECÍFICOS DA TELA DE ADMINISTRADORES --- */
+
+/* Título das Tabelas (para separar as duas tabelas) */
+.table-title-adm {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0B3C5D;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-left: 5px solid #3282B8; /* Detalhe lateral azul */
+    padding-left: 10px;
+}
+
+/* Link Perfil Principal (azul simples) */
+.link-perfil-principal {
+    color: #3282B8;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.link-perfil-principal:hover {
+    background-color: #f0f8ff; /* Fundo muito claro no hover */
+    text-decoration: underline;
+}
+
+/* Ações dos Demais Administradores: Modificações */
+.acoes-demais {
+    /* Alinhamento ajustado para lixeira */
+    justify-content: flex-start; /* Alinha à esquerda na célula */
+    gap: 10px;
+}
+
+/* Botão Suspender/Reativar (Azul na tela de Adm) */
+.btn-suspender-adm {
+    background: #3282B8 !important; /* Força o azul, como na imagem */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.btn-suspender-adm:hover {
+    background: #2974a4 !important;
+    opacity: 1;
+}
+
+/* Ícone de suspender (garantindo que o ícone interno seja branco/herde a cor do texto) */
+.icon-suspender svg {
+    fill: white;
+    width: 14px;
+    height: 14px;
+}
+
+/* Botão Excluir (Apenas ícone na imagem) */
+.btn-icon-only {
+    padding: 8px; /* Padding para ícone único */
+    width: 35px; /* Largura fixa para ser quadrado */
+    justify-content: center;
+}
+
+/* Botão Cadastrar Novo Administrador (Para distingui-lo do botão genérico 'Adicionar usuário') */
+.btn-add-admin {
+    float: left; /* Alinha o botão à esquerda, conforme a imagem */
+    margin-left: 0;
+}

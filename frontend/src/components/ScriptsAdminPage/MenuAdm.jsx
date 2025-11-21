@@ -171,7 +171,7 @@ export default function MenuAdm() {
           left: 0;
           height: 100%;
           padding-top: 50px; 
-          background: #2c3e50; /* Azul escuro/cinza moderno para contraste */
+          background: #0B3C5D; /* Azul escuro/cinza moderno para contraste */
           color: #ecf0f1; 
           transition: width 0.3s ease; /* Transição suave na abertura/fechamento */
           z-index: 1000;
@@ -260,7 +260,7 @@ export default function MenuAdm() {
         }
 
         .menu-btn:hover {
-          background: #34495e; /* Fundo levemente mais claro no hover */
+          background: #0d5280ff; /* Fundo levemente mais claro no hover */
           color: #ecf0f1; 
         }
 
