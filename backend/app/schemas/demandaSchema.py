@@ -1,8 +1,18 @@
 from typing import Optional
 from pydantic import BaseModel, Field
+from uuid import UUID
 
+class createDemandas(BaseModel):
+    titulo: str = Field(..., min_length=1, max_length=200)
+    descricao: Optional[str] = None
+    prioridade: str = Field(..., pattern="^(baixa|media|alta|crítica)$")
+    status: str = Field(default="pendente", pattern="^(pendente|em_análise|aprovada|em_execução|concluida|rejeitada)$")
+    categoria: Optional[str] = Field(..., pattern="^(infraestrutura|recursos_humanos|materiais_didáticos|transporte_escolar|outros)$")
+    estimativa_custo: Optional[float] = Field(None, ge=0)
+    responsavel: Optional[str] = None
+    
 class demandas(BaseModel):
-    id: Optional[str] = None
+    id: Optional[UUID] = None
     titulo: str = Field(..., min_length=1, max_length=200)
     descricao: Optional[str] = None
     prioridade: str = Field(..., pattern="^(baixa|media|alta|crítica)$")
