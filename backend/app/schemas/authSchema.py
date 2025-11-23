@@ -1,9 +1,17 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
-class Usuario(BaseModel):
-    email: str
-    cargo: str
+class UsuarioBase(BaseModel):
+    id: int
+    # permissoes: list[str]
 
-class Token(BaseModel):
+class UsuarioResponse(UsuarioBase):
+    nome: str
+    email: EmailStr
+    telefone: str
+    cpf: str
+    permissoes: list[str]
+
+class loginResponse(BaseModel):
     access_token: str
     token_type: str
+    user: UsuarioResponse
