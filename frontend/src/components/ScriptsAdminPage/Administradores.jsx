@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { FiEdit, FiTrash2, FiPlus, FiMoon } from "react-icons/fi";
 // Importamos o CSS de estilos globais/reutilizáveis
 import "../../styles/StylesAdminPage/usuarios.css"; 
-import "../../styles/StylesAdminPage/adminpage.css"; 
 
 // --- Dados Mockados para a Tela de Administradores ---
 const dadosAdministradores = {

@@ -1,13 +1,26 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from routers import login, demanda, simec, censo, problema
 from db import semear
+from db.connection import get_db, Base, engine
 
 from typing import Annotated
 from schemas import authSchema
 from security import auth
 from utils import responses
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    Base.metadata.create_all(bind=engine)
+    print("✅ Banco de dados inicializado!")
+
+    yield
+
+    # Shutdown
+    print("❌ Encerrando a aplicação...")
+    
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(login.router)
 app.include_router(demanda.router)
@@ -31,3 +44,8 @@ def teste(t: Annotated[authSchema.UsuarioBase, Depends(auth.autenticar)]):
 @app.get('/admin', dependencies=[Depends(auth.requisitar_permissao('adicionar_admin'))])
 def teste():
     return 'acesso para adicionar admin autorizado'
+
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host='0.0.0.0', port=8000)
