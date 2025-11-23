@@ -1,11 +1,10 @@
 import httpx
 import aiofiles
+from db.connection import SessionLocal
+from db.models import Controle_simec
+from datetime import datetime
 
 async def atualizar():
-    # verificar se existe dados do simec em processamento no banco
-    # se existir, cancelar a operação
-    # se não, escrever no db a situação de "baixando"
-
     contexto_ssl = httpx.create_ssl_context(verify=False)
     try: 
         async with httpx.AsyncClient(timeout=60, verify=contexto_ssl) as client:
@@ -26,12 +25,35 @@ async def atualizar():
                     nome_do_arquivo = 'simec.xlxs'
 
                 print('Baixando arquivo do Simec...')
-                # colocar o caminho da pasta aqui ↓
-                async with aiofiles.open(nome_do_arquivo, 'wb') as arquivo:
-                    # escrever o andamento do download no db aqui
-                    async for chunk in response.aiter_bytes(chunk_size=8192):
-                        await arquivo.write(chunk)
+                with SessionLocal() as db:
+                    # colocar o caminho da pasta aqui ↓
+                    async with aiofiles.open(nome_do_arquivo, 'wb') as arquivo:
+                        # escrever o andamento do download no db aqui
+                        intervarlo = 1024 * 1024 * 3 # 3 MB
+                        total_baixado = 0
+                        ultimo_registro = 0
 
+                        db.add(Controle_simec(
+                            situacao='Baixando',
+                            progresso=0,
+                            atualizado_em=datetime.now()
+                        ))
+                        db.commit()
+                        async for chunk in response.aiter_bytes(chunk_size=8192):
+                            await arquivo.write(chunk)
+                            total_baixado += len(chunk)
+
+                            if (total_baixado - ultimo_registro) >= intervarlo :
+                                db.query(Controle_simec).update({
+                                    'progresso': (total_baixado / (1024 * 1024)) # armazena em progresso em MB
+                                })
+                                db.commit()
+                                print('registrado')
+                                ultimo_registro = total_baixado
+                    db.query(Controle_simec).update({
+                        'progresso': 'Concluido',
+                    })
+                    db.commit()
                 print('Dowloando concluído')
 
         # guardar a data de atualização simec no db aqui

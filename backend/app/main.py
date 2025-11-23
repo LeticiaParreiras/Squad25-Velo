@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from routers import login, demanda, simec, censo, problema
+from db import semear
 
 from typing import Annotated
 from schemas import authSchema
@@ -14,15 +15,19 @@ app.include_router(simec.router)
 app.include_router(censo.router)
 app.include_router(problema.router)
 
+# semear.semear_cargos()
+# semear.semear_permissoes()
+# semear.semear_relacionamentos()
+
 #  exemplo de uma rota protegida:
 @app.get(
         '/',
         responses=responses.AUTH_RESPONSES
     )
-def teste(t: Annotated[authSchema.Usuario, Depends(auth.autenticar)]):
+def teste(t: Annotated[authSchema.UsuarioBase, Depends(auth.autenticar)]):
     return 'acesso autorizado'
 
 #  exemplo de uma rota adm protegida:
-@app.get('/admin')
-def teste(t: Annotated[authSchema.Usuario, Depends(auth.autenticar_adm)]):
-    return 'acesso do adm autorizado'
+@app.get('/admin', dependencies=[Depends(auth.requisitar_permissao('adicionar_admin'))])
+def teste():
+    return 'acesso para adicionar admin autorizado'

@@ -30,9 +30,6 @@ def extrair_arquivo_zip(caminho:str, destino: str):
         arq_zip.extractall(destino)
 
 async def atualizar(ano: str):
-    # verificar se já existe alguma opereação relacionado a este ano no banco
-    # se existir, cancelar a operação
-    # se não, escrever no db a situação de "baixando"
     async with httpx.AsyncClient(timeout=60) as client:
         links_disponiveis = await pegar_anos_disponiveis(client)
         link = next((item for item in links_disponiveis if item['ano'] == ano), None)
