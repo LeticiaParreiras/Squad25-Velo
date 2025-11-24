@@ -120,3 +120,4 @@ async def deletar_demanda(demanda_id: UUID, db: Session = Depends(get_db)):
     db.commit()
     
     return None
+
