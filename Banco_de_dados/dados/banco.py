@@ -18,70 +18,78 @@ def mapear_tipos_postgres(df: pd.DataFrame):
     
     return mapa
 
+def criar_tabela_ano(conn):
+    sql = """
+    CREATE TABLE IF NOT EXISTS ano (
+        ano INTEGER PRIMARY KEY
+    );
+    """
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    cur.close()
+
+
 def criar_tabela_postgres(df: pd.DataFrame, conn, tabela: str):
     tipos = mapear_tipos_postgres(df)
 
     colunas_sql = []
     for coluna, tipo_postgres in tipos.items():
-        # escapar possíveis aspas no nome da coluna
         col_esc = coluna.replace('"', '""')
         colunas_sql.append(f'"{col_esc}" {tipo_postgres}')
 
-    # sempre usar table name entre aspas para preservar case (caller passa o nome desejado)
     tabela_esc = tabela.replace('"', '""')
+
     sql = f"""
     CREATE TABLE IF NOT EXISTS "{tabela_esc}" (
-        {", ".join(colunas_sql)}
+        {", ".join(colunas_sql)},
+        FOREIGN KEY ("ano") REFERENCES ano(ano)
     );
     """
 
-    try:
-        cursor = conn.cursor()
-        cursor.execute(sql)
-        conn.commit()
-        cursor.close()
-        print(f"Tabela '{tabela}' criada ou já existe.")
-    except Exception as e:
-        print(f"Erro ao criar tabela: {e}")
-        # não re-raise para não quebrar pipeline automaticamente; log apenas
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    cur.close()
+
+
+def insert_ano(conn, ano):
+    sql = """
+    INSERT INTO ano (ano)
+    VALUES (%s)
+    ON CONFLICT DO NOTHING;
+    """
+    cur = conn.cursor()
+    cur.execute(sql, (ano,))
+    conn.commit()
+    cur.close()
 
 
 def inserir_dados(df: pd.DataFrame, conn, tabela: str, chunk_size=1000):
     cursor = conn.cursor()
 
-    # Substituir NaN por None (POSTGRES entende como NULL)
     df = df.where(pd.notnull(df), None)
 
     colunas = list(df.columns)
-    # escapar colunas
-    colunas_sql = ", ".join([f'"{c.replace("\"", "\"\"")}"' for c in colunas])
-    valores_placeholder = ", ".join(["%s"] * len(colunas))
+    colunas_sql = ", ".join(f'"{c}"' for c in colunas)
+    placeholders = ", ".join(["%s"] * len(colunas))
 
     tabela_esc = tabela.replace('"', '""')
-    insert_sql = f"""
+    sql = f"""
     INSERT INTO "{tabela_esc}" ({colunas_sql})
-    VALUES ({valores_placeholder});
+    VALUES ({placeholders})
     """
 
-    linhas = [tuple(r) for r in df.values.tolist()]
+    linhas = [tuple(x) for x in df.to_numpy()]
 
-    try:
-        for i in range(0, len(linhas), chunk_size):
-            batch = linhas[i:i+chunk_size]
-            cursor.executemany(insert_sql, batch)
-            conn.commit()
-            print(f"Inseridos {i + len(batch)} registros...")
+    for i in range(0, len(linhas), chunk_size):
+        batch = linhas[i:i+chunk_size]
+        cursor.executemany(sql, batch)
+        conn.commit()
+        print(f"Inseridos {i + len(batch)} registros...")
 
-        cursor.close()
-        print("Todos os dados foram inseridos com sucesso!")
+    cursor.close()
 
-    except Exception as e:
-        print(f"Erro ao inserir dados: {e}")
-        conn.rollback()
-        try:
-            cursor.close()
-        except:
-            pass
 
 
 def conectar_bd(db_name, user, password, host, port='5432'):
