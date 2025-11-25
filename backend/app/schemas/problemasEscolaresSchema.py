@@ -1,38 +1,46 @@
+from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field
 from uuid import UUID
+from schemas.baseSchema import ItemResponse
 
-class problemasEscolares(BaseModel):
+class problemasEscolaresResponse(BaseModel):
     id: Optional[UUID] = None
     titulo: str = Field(..., min_length=1, max_length=200)
     descricao: Optional[str] = None
-    prioridade: str = Field(..., pattern="^(baixa|media|alta|crítica)$")
-    status: str = Field(default="pendente", pattern="^(pendente|em_andamento|resolvido|rejeitado)$")
+    prioridade: str 
+    status: str 
     nome_escola: str = Field(..., min_length=1, max_length=200)
-    categoria_administrativa: str = Field(..., examples=(["municipal","estadual","militar","comunitaria"]))
-    local:str= Field(..., examples=["urbana","rural","indígenas"," quilombolas"])
-    nivel_ensino: str = Field(..., examples=["infantil","fundamental","medio","técnico","EJA"])
+    categoria_administrativa: ItemResponse
+    local: ItemResponse
+    nivel_ensino: ItemResponse
     responsavel: Optional[str] = None
+    data_criacao: datetime
+    data_atualizacao: datetime
+    
+    class Config:
+        from_attributes = True
     
 class problemasEscolaresCreate(BaseModel):
     titulo: str = Field(..., min_length=1, max_length=200)
     descricao: Optional[str] = None
-    prioridade: str = Field(..., pattern="^(baixa|media|alta|crítica)$")
+    prioridade: str = Field(..., pattern="^(baixa|media|alta|critica)$")
     status: str = Field(default="pendente", pattern="^(pendente|em_andamento|resolvido|rejeitado)$")
     nome_escola: str = Field(..., min_length=1, max_length=200)
-    categoria_administrativa: str = Field(..., examples=(["municipal","estadual","militar","comunitaria"]))
-    local:str= Field(..., examples=["urbana","rural","indígenas"," quilombolas"])
-    nivel_ensino: str = Field(..., examples=["infantil","fundamental","medio","técnico","EJA"])
     responsavel: Optional[str] = None
+
+    categoria_administrativa_id: UUID
+    local_id: UUID
+    nivel_ensino_id: UUID
     
 class problemasEscolaresUpdate(BaseModel):
     """Schema para atualizar problema (todos os campos opcionais)"""
     titulo: Optional[str] = Field(None, min_length=1, max_length=200)
     descricao: Optional[str] = None
-    prioridade: Optional[str] = Field(None, pattern="^(baixa|media|alta|crítica)$")
+    prioridade: Optional[str] = Field(None, pattern="^(baixa|media|alta|critica)$")
     status: Optional[str] = Field(None, pattern="^(pendente|em_análise|aprovada|em_execução|concluida|rejeitada)$")
     nome_escola: Optional[str] = None
-    local: Optional[str] = Field(None, examples=["urbana","rural","indígenas"," quilombolas"])
-    categoria_administrativa: Optional[str] = None
-    nivel_ensino: Optional[str] = Field(None, examples=["infantil","fundamental","medio","técnico","EJA"])
+    local: Optional[UUID] = None
+    categoria_administrativa: Optional[UUID] = None
+    nivel_ensino: Optional[UUID] = None
     responsavel: Optional[str] = None
