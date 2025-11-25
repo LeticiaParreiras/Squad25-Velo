@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 
@@ -23,7 +23,7 @@ router = APIRouter(
         },
         response_model= authSchema.loginResponse
 )
-def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+def login(response: Response, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     # consultar no banco e verificar senha e retornar o id dele...
     ERRO_401 = HTTPException(
         status_code=401,
@@ -44,10 +44,18 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
         )
 
     token = auth.gerar_jwt({'id': usuario.id})
-    # retornar o usuário completo abaixo
+    exp = auth.EXP_MINUTOS * 60  # Convertendo para segundos
+    response.set_cookie(
+        key="access_token",        
+        value=f"Bearer {token}",
+        httponly=True,
+        max_age=exp,
+        expires=exp,
+        samesite="lax",
+        secure=False                # ativar em produção com https
+    )
+    
     return {
-        'access_token': token,
-        'token_type': 'bearer',
         'user': {
             'id': usuario.id,
             'nome': usuario.nome,

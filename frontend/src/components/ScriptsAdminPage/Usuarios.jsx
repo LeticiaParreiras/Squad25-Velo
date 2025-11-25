@@ -54,7 +54,7 @@ export default function Usuarios() {
       <p className="page-description">
         Gerencie e monitore todos os usuários cadastrados. Utilize os campos de busca e filtro para localizar e modificar rapidamente as contas, ou adicione um novo registro.
       </p>
-
+ 
       {/* CONTROLES DE BUSCA E FILTRO */}
       <div className="controle-tabela">
         {/* Campo de Busca */}

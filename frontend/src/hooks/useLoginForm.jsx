@@ -7,22 +7,47 @@ const useLoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
-    console.log("Dados submetidos para login:", { email, password });
+    try {
+      // tranformando para o padrão oauth2
+      const formData = new URLSearchParams();
+      formData.append("username", email);
+      formData.append("password", password);
 
-    setTimeout(() => {
-      if (email === "gestor@siged.com" && password === "12345") {
-        console.log("Login bem-sucedido!");
-        navigate("/adminpage");
-      } else {
-        setError("Credenciais inválidas. Tente novamente.");
+      // trocar a url para o endereço do backend
+      // talver criar hooks para uma melhor escalabilidade
+      const response = await fetch("http://127.0.0.1:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "credentials": "include",
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        // Tenta ler a mensagem de erro do backend ou define uma genérica (talvez mudar depois)
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || "Email ou senha incorretos");
       }
+
+      const data = await response.json();
+      console.log(data);
+
+      // Salva o usuario no localStorage e redireciona
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/adminpage");
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return {

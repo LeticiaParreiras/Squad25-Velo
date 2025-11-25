@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from routers import login, demanda, simec, censo, problema
 from db import semear
 from db.connection import get_db, Base, engine
@@ -21,6 +22,19 @@ async def lifespan(app: FastAPI):
     print("❌ Encerrando a aplicação...")
     
 app = FastAPI(lifespan=lifespan)
+
+# origins para CORS
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,    # Lista de URLs que podem acessar
+    allow_credentials=True,   # Permite enviar Cookies/Auth
+    allow_methods=["*"],      # Permite GET, POST, PUT, DELETE, etc.
+    allow_headers=["*"],      # Permite todos os cabeçalhos
+)
 
 app.include_router(login.router)
 app.include_router(demanda.router)

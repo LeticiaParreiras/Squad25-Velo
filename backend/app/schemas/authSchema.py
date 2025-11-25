@@ -12,6 +12,4 @@ class UsuarioResponse(UsuarioBase):
     permissoes: list[str]
 
 class loginResponse(BaseModel):
-    access_token: str
-    token_type: str
     user: UsuarioResponse
