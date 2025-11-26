@@ -30,7 +30,7 @@ def ler(SAIDA_FILE) -> pd.DataFrame:
     return pd.read_csv(SAIDA_FILE, encoding='utf-8')
 
 
-def tratamentos(df: pd.DataFrame) -> pd.DataFrame:
+def tratamentos_simec(df: pd.DataFrame) -> pd.DataFrame:
 
     # Normalizar colunas
     df.columns = df.columns.str.strip()
@@ -108,9 +108,11 @@ def tratamentos(df: pd.DataFrame) -> pd.DataFrame:
     df[str_cols] = df[str_cols].fillna('NaS')
 
     return df
+
+#def tratamento_censo(df: pd.DataFrame) -> pd.DataFrame:
+    
+
 # Pipeline principal
-
-
 def pipeline():
     logger.info("Pipeline iniciada.")
     try:
@@ -120,8 +122,13 @@ def pipeline():
         df = ler(arquivo_saida)
         logger.info(f"Arquivo carregado. Linhas: {len(df)}")
 
-        df = tratamentos(df)
+        df = tratamentos_simec(df)
         logger.info("Tratamentos finalizados.")
+
+        ano = int(input("Os dados correspondem a qual ano?"))
+
+        df['ano'] = ano
+
 
         conn = banco.conectar_bd(
             db_name=os.getenv("MB_DB_DBNAME"), 
@@ -136,8 +143,14 @@ def pipeline():
                 banco.criar_tabela_postgres(df, conn, tabela="Simec")
                 logger.info("Tabela criada/validada.")
                 
+                banco.criar_tabela_ano(conn)
+                logger.info("Tabela de ano criada.")
+
+                banco.insert_ano(conn,ano)
                 banco.inserir_dados(df, conn, tabela='Simec')
                 logger.info(f"Foram inseridas {len(df)} linhas.")
+                
+
             except Exception as e:
                 logger.error(f"Erro ao inserir dados: {str(e)}")
                 raise
