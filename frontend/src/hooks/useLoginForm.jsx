@@ -25,26 +25,23 @@ const useLoginForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "credentials": "include",
         },
         body: formData,
+        credentials: "include",
       });
 
       if (!response.ok) {
         // Tenta ler a mensagem de erro do backend ou define uma genérica (talvez mudar depois)
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || "Email ou senha incorretos");
+        const errorData = await response.json();
+        setError(errorData.detail || "Erro ao fazer login");
+        return;
       }
-
-      const data = await response.json();
-      console.log(data);
-
-      // Salva o usuario no localStorage e redireciona
-      localStorage.setItem("user", JSON.stringify(data.user));
+      
       navigate("/adminpage");
 
     } catch (err) {
-      setError(err.message);
+      console.error("Erro ao fazer login:", err);
+      setError('Não foi possivel fazer login no momento');
     } finally {
       setIsLoading(false);
     }

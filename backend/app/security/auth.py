@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 from fastapi.security import OAuth2PasswordBearer
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Cookie
 from typing import Annotated
 
 from schemas.authSchema import UsuarioBase
@@ -25,10 +25,25 @@ def gerar_jwt(dados: dict, exp_minutos: int | None = EXP_MINUTOS) -> str:
 def decodificar_jwt(cod_jwt: str):
     return jwt.decode(cod_jwt, key=SECRET_KEY, algorithms=[ALGORITHM])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login", auto_error=False)
+
+def obter_token(
+    cookie_token: Annotated[str | None, Cookie(alias="access_token")] = None,
+    header_token: Annotated[str | None, Depends(oauth2_scheme)] = None
+):
+    if cookie_token:
+        return cookie_token
+    
+    if header_token:
+        return header_token
+
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Não autenticado",
+    )
 
 # essa será a função que irá proteger as rotas
-def autenticar(token: Annotated[str, Depends(oauth2_scheme)]) -> UsuarioBase:
+def autenticar(token: Annotated[str, Depends(obter_token)]) -> UsuarioBase:
     erro_de_verificacao = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Credenciais inválidas",

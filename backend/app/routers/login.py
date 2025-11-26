@@ -47,12 +47,12 @@ def login(response: Response, form_data: Annotated[OAuth2PasswordRequestForm, De
     exp = auth.EXP_MINUTOS * 60  # Convertendo para segundos
     response.set_cookie(
         key="access_token",        
-        value=f"Bearer {token}",
+        value=token,
         httponly=True,
         max_age=exp,
         expires=exp,
-        samesite="lax",
-        secure=False                # ativar em produção com https
+        samesite='none',
+        secure=True                # ativar em produção com https
     )
     
     return {
