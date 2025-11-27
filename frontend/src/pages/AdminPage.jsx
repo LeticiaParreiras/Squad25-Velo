@@ -6,6 +6,8 @@ import Header from "../components/ScriptsAdminPage/Header";
 import Administradores from "../components/ScriptsAdminPage/Administradores";
 import Auditoria from "../components/ScriptsAdminPage/Auditoria";
 import ControleInformacao from "../components/ScriptsAdminPage/Controleinformacao";
+// 1. Importe o novo componente
+import Downloads from "../components/ScriptsAdminPage/Downloads"; 
 import "../styles/StylesAdminPage/adminpage.css";
 
 export default function AdminPage() {
@@ -20,6 +22,7 @@ export default function AdminPage() {
           <Route path="administradores" element={<Administradores />} />
           <Route path="controle" element={<ControleInformacao />} />
           <Route path="auditoria" element={<Auditoria />}  />
+          <Route path="downloads" element={<Downloads />} />
         </Routes>
         </div>
     </>
