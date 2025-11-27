@@ -172,6 +172,19 @@ export default function MenuAdm() {
     ? "menu-container open"
     : "menu-container closed";
 
+  const logout = async () => {
+    console.log('apertado');
+    const response = await fetch('http://127.0.0.1:8000/users/logout', {
+      method: 'POST',
+      credentials: 'include'
+    })
+
+    if (!response.ok){
+      window.alert('falha ao sair do sistema');
+    }
+    else window.location.href = '/'
+  }
+
   return (
     <>
       <style>{`
@@ -423,15 +436,15 @@ export default function MenuAdm() {
             {isOpen && <span className="menu-text">Consultar demandas</span>}
           </a>
 
-          <a
-            href="/logout"
+          <button
             className="menu-btn"
+            onClick={logout}
             title="Sair do sistema"
-            style={{ color: "#e74c3c" }} 
+            style={{ color: "#e74c3c", border: 'none'}} 
           >
             <IconLogout className="menu-icon" />
             {isOpen && <span className="menu-text">Sair</span>}
-          </a>
+          </button>
         </nav>
       </aside>
     </>

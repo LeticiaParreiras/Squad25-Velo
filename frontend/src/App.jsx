@@ -8,8 +8,8 @@ import PrivateRoute from "./auth/privateRouter.jsx";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           
@@ -18,8 +18,8 @@ function App() {
             <Route path="/adminpage/*" element={<AdminPage />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
