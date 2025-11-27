@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-// Removida a importação de Link, pois a tag <a> será usada.
 
-// Componentes de Ícones SVG Inline (Heroicons style)
-// Nota: Substituídos os ícones originais (Font Awesome) por equivalentes modernos (Heroicons)
-
-// Icone Dashboard (Adicionado o caminho para um ícone de Dashboard típico - Grid)
 const IconDashboard = (props) => (
   <svg
     {...props}
@@ -143,6 +138,23 @@ const IconCogs = (props) => (
       strokeLinecap="round"
       strokeLinejoin="round"
       d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"
+    />
+  </svg>
+);
+
+const IconLogout = (props) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m-3.75-3h12m0 0-3-3m3 3-3 3"
     />
   </svg>
 );
@@ -315,7 +327,7 @@ export default function MenuAdm() {
         </div>
 
         <nav className="menu-buttons">
-          {/* 🚀 Dashboard (NOVO) */}
+          {/* 🚀 Dashboard */}
           <a href="/adminpage/dashboard" className="menu-btn" title="Dashboard">
             <IconDashboard className="menu-icon" />
             {isOpen && <span className="menu-text">Dashboard</span>}
@@ -327,7 +339,7 @@ export default function MenuAdm() {
             {isOpen && <span className="menu-text">Usuários</span>}
           </a>
 
-          {/* Administradores (usando IconKey para representar acesso/permissão) */}
+          {/* Administradores */}
           <a
             href="/adminpage/administradores"
             className="menu-btn"
@@ -363,6 +375,62 @@ export default function MenuAdm() {
             {isOpen && (
               <span className="menu-text">Controle de Informação</span>
             )}
+          </a>
+
+          {/* ➕ Registrar Demanda */}
+          <a
+            href="/adminpage/registrardemanda"
+            className="menu-btn"
+            title="Registrar demanda"
+          >
+            <svg
+              className="menu-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            {isOpen && <span className="menu-text">Registrar demanda</span>}
+          </a>
+
+          {/* 🔍 Consultar Demandas */}
+          <a
+            href="/adminpage/consultardemandas"
+            className="menu-btn"
+            title="Consultar demandas"
+          >
+            <svg
+              className="menu-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm6.75-1.5L21 21"
+              />
+            </svg>
+            {isOpen && <span className="menu-text">Consultar demandas</span>}
+          </a>
+
+          <a
+            href="/logout"
+            className="menu-btn"
+            title="Sair do sistema"
+            style={{ color: "#e74c3c" }} 
+          >
+            <IconLogout className="menu-icon" />
+            {isOpen && <span className="menu-text">Sair</span>}
           </a>
         </nav>
       </aside>
