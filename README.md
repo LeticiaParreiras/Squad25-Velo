@@ -108,7 +108,7 @@ A pasta **Banco_de_dados/** contém os arquivos necessários para criação, man
 
 ### ▶️ Como configurar o Banco de Dados
 
-1. Instale o **MySQL** ou outro SGBD utilizado pelo projeto.
+1. Instale o **PostgreSQL** ou outro SGBD utilizado pelo projeto.
 2. Navegue até a pasta `Banco_de_dados/`.
 3. Execute o script principal de criação:
 
@@ -116,7 +116,17 @@ A pasta **Banco_de_dados/** contém os arquivos necessários para criação, man
 [comandos]
 ```
 
-Caso o backend utilize variáveis de ambiente para conexão, configure o arquivo `.env` na pasta `backend`.
+### ⚙️ Conectar com backend
+Para conectar o banco de dados, na parta `/backend` crie um arquivo `.env` e preencha as seguintes variáveis com seus respectivos valores.:
+```
+SECRET_KEY_JWT= Chave secreta para a assinatura de tokens JWT.
+ALGORITHM= Algoritmo de criptografia usado para os tokens JWT (ex: HS256).
+
+DB_USER= Nome de usuário do banco de dados
+DB_PASSWORD= Senha do banco de dados
+DB_URL= Endereço do host do banco de dados
+DB_NAME= Nome do banco de dados a ser conectado
+```
 
 ---
 
