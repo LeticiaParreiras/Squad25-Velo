@@ -1,84 +1,298 @@
+/* consultarDemandas.css */
+
 .consultar-container {
-  padding: 0px 12%;
-  width: 100%;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.consultar-container h1 {
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 25px;
+.consultar-title {
+  font-size: 32px;
   font-weight: 700;
   color: #0b3c5d;
+  margin-bottom: 8px;
 }
 
 .consultar-description {
-  text-align: center;
-  font-size: 0.95rem;
-  color: #7f8c8d;
-  margin-bottom: 40px;
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 24px;
 }
 
 .consultar-card {
-  background: white;
+  background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  padding: 35px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Filtros */
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form-group-consulta {
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
-.form-group-cd {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group-cd label {
-  background: #0b3c5d;
-  padding: 10px;
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-bottom: 3px solid #3282b8;
-}
-
-.form-group-cd input,
-.form-group-cd select {
-  padding: 12px;
-  border: 1px solid #bdc3c7;
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: white;
-  width: 100%;
-}
-
-.btn-search {
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-  background-color: #3282b8;
-  color: white;
-  margin-top: 20px;
-}
-
-.btn-search:hover {
-  background-color: #2974a4;
-}
-
-.resultado-texto {
-  margin-top: 15px;
+.label-consulta {
+  font-size: 14px;
   font-weight: 600;
   color: #0b3c5d;
+  margin-bottom: 8px;
+}
+
+.select-consulta {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.select-consulta:hover {
+  border-color: #0b3c5d;
+}
+
+.select-consulta:focus {
+  border-color: #0b3c5d;
+  box-shadow: 0 0 0 3px rgba(11, 60, 93, 0.1);
+}
+
+/* Botões */
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btn-buscar {
+  flex: 1;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #0b3c5d;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-buscar:hover:not(:disabled) {
+  background-color: #083049;
+}
+
+.btn-buscar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-limpar {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0b3c5d;
+  background-color: #fff;
+  border: 2px solid #0b3c5d;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-limpar:hover {
+  background-color: #0b3c5d;
+  color: #fff;
+}
+
+/* Mensagens */
+.error-message {
+  padding: 12px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: 6px;
+  margin-top: 16px;
+  border: 1px solid #f5c6cb;
+}
+
+.no-results {
   text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+/* Resultados */
+.result-container {
+  margin-top: 24px;
+}
+
+.result-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0b3c5d;
+  margin-bottom: 16px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+/* Tabela */
+.demandas-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.demandas-table thead {
+  background-color: #f8f9fa;
+}
+
+.demandas-table th {
+  padding: 12px;
+  text-align: left;
+  color: #0b3c5d;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.demandas-table tbody tr {
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 0.2s;
+}
+
+.demandas-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.demandas-table td {
+  padding: 12px;
+  color: #495057;
+}
+
+/* Badges */
+.badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Badges de Prioridade */
+.badge-prioridade-baixa {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-prioridade-media {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-prioridade-alta {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-prioridade-critica {
+  background-color: #721c24;
+  color: #fff;
+}
+
+/* Badges de Status */
+.badge-status-pendente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-status-em_analise {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.badge-status-aprovada {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.badge-status-em_execucao {
+  background-color: #cff4fc;
+  color: #055160;
+}
+
+.badge-status-concluida {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-status-rejeitada {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+button.excluir{
+    background: #ef4444; /* vermelho */
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+  .excluir:hover {
+  background: #dc2626;
+  transform: scale(1.08);
+}
+
+.excluir:active {
+  transform: scale(0.96);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .consultar-container {
+    padding: 16px;
+  }
+
+  .consultar-title {
+    font-size: 24px;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn-buscar,
+  .btn-limpar {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: scroll;
+  }
+
+  .demandas-table {
+    font-size: 12px;
+  }
+
+  .demandas-table th,
+  .demandas-table td {
+    padding: 8px;
+  }
+  
 }

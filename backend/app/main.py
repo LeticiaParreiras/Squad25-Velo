@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from routers import demanda, simec, censo, usuarios, problema
+from routers import login, demanda, simec, censo, usuarios, problema, adminRouter, userRouter
 from db import semear
 from db.connection import get_db, Base, engine
 
@@ -41,6 +41,8 @@ app.include_router(simec.router)
 app.include_router(censo.router)
 app.include_router(usuarios.router)
 app.include_router(problema.router)
+app.include_router(adminRouter.router)
+app.include_router(userRouter.router)
 
 # semear.semear_cargos()
 # semear.semear_permissoes()
