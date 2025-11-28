@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Definições de Ícones (Mantidas como no original, aqui para completude)
+// Definições de Ícones (Mantidas)
 const IconDashboard = (props) => (
   <svg
     {...props}
@@ -153,30 +153,16 @@ const IconLogout = (props) => (
 );
 
 export default function MenuAdm() {
-  // 💡 ESTADO: Inicia fechado (false) para que no mobile comece oculto, e no desktop, fechado (apenas ícones).
+  // 💡 ESTADO: Inicia fechado (false)
   const [isOpen, setIsOpen] = useState(false); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Define a classe CSS com base no estado para controlar a largura/posição.
   const containerClass = isOpen
     ? "menu-container open"
     : "menu-container closed";
-
-  const logout = async () => {
-    console.log('apertado');
-    const response = await fetch('http://127.0.0.1:8000/users/logout', {
-      method: 'POST',
-      credentials: 'include'
-    })
-
-    if (!response.ok){
-      window.alert('falha ao sair do sistema');
-    }
-    else window.location.href = '/'
-  }
 
   return (
     <>
@@ -193,13 +179,16 @@ export default function MenuAdm() {
           padding-top: 50px; 
           background: #0B3C5D;
           color: #ecf0f1; 
-          transition: width 0.3s ease, left 0.3s ease; /* Adicionado 'left' para mobile */
+          transition: width 0.3s ease, left 0.3s ease;
           z-index: 1000;
           display: flex;
           flex-direction: column;
           box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+          
+          /* 💡 CRÍTICO: Define o contexto para o toggle-btn absoluto no desktop */
+          position: relative; 
         }
-
+        
         /* Estado Aberto (Largo) */
         .menu-container.open {
           width: 250px;
@@ -210,30 +199,28 @@ export default function MenuAdm() {
           width: 70px; 
         }
 
-        /* Botão de Alternar (Toggle) */
+        /* Botão de Alternar (Toggle) - Estilos base */
         .toggle-btn {
-          position: fixed; /* Mantenho fixed para mobile, ajusto as coordenadas em desktop */
+          position: absolute; /* Padrão desktop: posicionado dentro do .menu-container */
           top: 20px; 
-          right: -49px; /* Posição escondida padrão */
           background: #3282b8;
           color: white;
           border: none;
           padding: 8px 12px;
-          border-radius: 0 5px 5px 0;
           cursor: pointer;
           font-size: 1.3rem; 
-          transition: right 0.3s ease, left 0.3s ease, background-color 0.2s ease;
+          transition: right 0.3s ease, left 0.3s ease, border-radius 0.3s ease;
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 5000; /* Alto z-index para garantir visibilidade */
+          z-index: 5000;
         }
         
         .toggle-btn:hover {
           background: #2974a4;
         }
 
-        /* Título e Cabeçalho */
+        /* Estilos de Conteúdo (Mantidos) */
         .menu-header {
           width: 100%;
           padding: 10px 0; 
@@ -304,19 +291,20 @@ export default function MenuAdm() {
           justify-content: center; 
           padding: 12px 0; 
         }
-        
-        /* Reposiciona o botão de toggle para dentro da sidebar quando fechada (DESKTOP) */
+
+        /* Lógica do Toggle no Desktop */
+        /* 1. Quando FECHADO (70px): Botão aparece à direita */
         .menu-container.closed .toggle-btn {
-          right: 15px;
-          border-radius: 5px;
-          left: auto;
+            right: 15px;
+            left: auto;
+            border-radius: 5px;
         }
         
-        /* Oculta o botão quando o menu está totalmente aberto (DESKTOP) */
+        /* 2. Quando ABERTO (250px): Botão fica escondido */
         .menu-container.open .toggle-btn {
-          right: -49px; 
-          left: auto;
-          border-radius: 0 5px 5px 0;
+            right: -49px; 
+            left: auto;
+            border-radius: 0 5px 5px 0;
         }
 
 
@@ -325,36 +313,43 @@ export default function MenuAdm() {
         /* ------------------------------------- */
         @media (max-width: 768px) {
             
-            /* 1. Oculta a sidebar fora da tela */
+            /* 1. Sidebar Oculta (Usando fixed para cobrir a tela) */
             .menu-container {
-                left: -250px; /* Posição inicial: totalmente escondida */
-                width: 250px !important; /* Sempre usa a largura completa */
-                box-shadow: none; 
-                padding-top: 80px; /* Espaço para o botão de toggle */
+                left: -250px; 
+                width: 250px !important; 
+                padding-top: 80px; 
+                
+                /* Volta para Fixed em mobile para cobrir a tela */
+                position: fixed !important; 
             }
 
             /* 2. Mostra a sidebar (transição) quando está 'open' */
             .menu-container.open {
-                left: 0; /* Desliza a sidebar para dentro */
+                left: 0; 
                 box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); 
             }
             
-            /* 3. Botão Toggle: Fixo no canto superior esquerdo */
-            .toggle-btn {
-                position: fixed;
+            /* 3. Botão Toggle: Fixo no canto superior esquerdo (Escondido DENTRO da aside) */
+            /* CRÍTICO: Movemos o botão para DENTRO da ASIDE. No mobile, a aside está escondida.
+               Se o botão ficar dentro, ele some. Precisamos tirá-lo de dentro
+               da aside *apenas visualmente* para que fique fixo na tela.
+            */
+            .menu-container .toggle-btn {
+                position: fixed !important; /* Volta a ser fixed na tela do navegador */
                 top: 15px; 
                 left: 15px; 
-                right: auto !important; /* Desativa a regra de 'right' do desktop */
+                right: auto !important; 
                 border-radius: 5px;
-                display: flex; /* Garante que o botão esteja sempre visível */
+                
+                /* Garante que o ícone de 'X' apareça corretamente */
+                display: flex;
             }
-
-            /* 4. Garante que o texto e título sempre apareçam em mobile, pois só abrimos ele no estado 'open' */
+            
+            /* Garante que o texto e o alinhamento estejam corretos em mobile */
             .menu-container .menu-text {
                 display: initial; 
             }
             
-            /* Remove a regra de alinhamento central forçado em mobile */
             .menu-container.closed .menu-btn {
                 justify-content: flex-start; 
                 padding: 12px 15px; 
@@ -365,35 +360,30 @@ export default function MenuAdm() {
         /* --- RESPONSIVIDADE (DESKTOP: > 768px) --- */
         /* ------------------------------------- */
         @media (min-width: 769px) {
-             /* Reseta o posicionamento da sidebar para o comportamento desktop */
+             /* 1. Reseta o posicionamento da sidebar para fixed no desktop */
             .menu-container {
                 left: 0 !important; 
-                width: 70px; /* Começa fechado (pois useState(false)) */
-            }
-
-            /* Garante que o botão de toggle volte a controlar a largura do menu (70px vs 250px) */
-             .menu-container.closed {
-                width: 70px; 
+                position: fixed !important; 
+                width: 70px; /* Começa fechado */
             }
         }
       `}</style>
 
-      {/* 🚀 BOTÃO TOGGLE (Deve ficar FORA da tag <aside> para ser sempre fixo e visível) */}
-      <button
-        className="toggle-btn"
-        onClick={toggleMenu}
-        title={isOpen ? "Fechar Menu" : "Abrir Menu"}
-      >
-        {isOpen ? (
-          <IconTimes className="menu-icon" /> // Ícone X quando Aberto
-        ) : (
-          <IconBars className="menu-icon" /> // Ícone Hambúrguer quando Fechado
-        )}
-      </button>
-
-      {/* A Sidebar <aside> */}
+      {/* 🚀 BOTÃO TOGGLE (MOVIDO PARA DENTRO DA <aside> - ESSENCIAL PARA O DESKTOP) */}
       <aside className={containerClass}>
         
+        <button
+          className="toggle-btn"
+          onClick={toggleMenu}
+          title={isOpen ? "Fechar Menu" : "Abrir Menu"}
+        >
+          {isOpen ? (
+            <IconTimes className="menu-icon" /> // Ícone X quando Aberto
+          ) : (
+            <IconBars className="menu-icon" /> // Ícone Hambúrguer quando Fechado
+          )}
+        </button>
+
         <div className="menu-header">
           {/* O título só aparece quando o menu está aberto */}
           {isOpen && <h2 className="menu-title">Menu</h2>}
@@ -494,29 +484,16 @@ export default function MenuAdm() {
             <span className="menu-text">Consultar demandas</span>
           </a>
 
-<<<<<<< HEAD
           {/* Sair */}
           <a
             href="/logout"
-=======
-          <button
->>>>>>> e6e0ff05f6449309ac2dfe4cb8a263a65fe9debe
             className="menu-btn"
-            onClick={logout}
             title="Sair do sistema"
-<<<<<<< HEAD
             style={{ color: "#e74c3c" }}
           >
             <IconLogout className="menu-icon" />
             <span className="menu-text">Sair</span>
           </a>
-=======
-            style={{ color: "#e74c3c", border: 'none'}} 
-          >
-            <IconLogout className="menu-icon" />
-            {isOpen && <span className="menu-text">Sair</span>}
-          </button>
->>>>>>> e6e0ff05f6449309ac2dfe4cb8a263a65fe9debe
         </nav>
       </aside>
     </>
