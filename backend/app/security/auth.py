@@ -54,7 +54,13 @@ def autenticar(token: Annotated[str, Depends(obter_token)]) -> UsuarioBase:
         payload = decodificar_jwt(token)
         # mover o try e except para o decodificar json
         # verificações deverão ser feitas aqui
-        return UsuarioBase(**payload)
+        usuario = UsuarioBase(**payload)
+        with SessionLocal() as db:
+            usuario_db = db.query(Usuario).filter(Usuario.id == usuario.id).first()
+            if not usuario_db:
+                raise erro_de_verificacao
+            
+        return usuario
     except JWTError:
         raise erro_de_verificacao
     

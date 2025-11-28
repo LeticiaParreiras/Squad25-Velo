@@ -5,6 +5,10 @@ import zipfile
 import asyncio
 import httpx
 import aiofiles
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SAIDA = os.path.join(BASE_DIR, 'db')
 
 async def pegar_anos_disponiveis(client: httpx.AsyncClient) -> list[dict[str, str]]:
     try:
@@ -51,7 +55,7 @@ async def atualizar(ano: str):
                     response.raise_for_status()
 
                     print(f'Baixando arquivo do censo {ano}...')
-                    async with aiofiles.open(f'censo_{ano}.zip', 'wb') as arquivo:
+                    async with aiofiles.open(f'{SAIDA}/censo_{ano}.zip', 'wb') as arquivo:
                         async for chunk in response.aiter_bytes(chunk_size=8192):
                             await arquivo.write(chunk)
 
@@ -59,8 +63,8 @@ async def atualizar(ano: str):
                     print(f'Extraindo arquivo do censo {ano}...')
                     await asyncio.to_thread(
                         extrair_arquivo_zip,
-                        caminho=f'censo_{ano}.zip',
-                        destino='./'
+                        caminho=f'{SAIDA}/censo_{ano}.zip',
+                        destino=SAIDA
                     )
 
             print(f'Download e extração do censo {ano} concluídos.')

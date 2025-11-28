@@ -15,7 +15,7 @@ router = APIRouter(
 )
 
 @router.get("/me", responses=AUTH_RESPONSES)
-async def atualizar_simec(usuario: Annotated[authSchema.UsuarioBase, Depends(auth.autenticar)]):
+async def verificar_auth(usuario: Annotated[authSchema.UsuarioBase, Depends(auth.autenticar)]):
     with SessionLocal() as db:
         usuario = db.query(Usuario).filter(Usuario.id == usuario.id).first()
         permissoes: list[Permissoes] = (

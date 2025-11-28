@@ -15,4 +15,4 @@ class Usuario(Base):
     email = Column(String, unique=True, nullable=False)
     telefone = Column(String, unique=True, nullable=False)
     senha = Column(String, nullable=False)
-    status = Column(Enum(StatusUsuarioEnum), nullable=False)
+    # status = Column(Enum(StatusUsuarioEnum), nullable=False)

@@ -1,27 +1,27 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from routers import login, demanda, simec, censo, usuarios, problema, adminRouter, userRouter
-from db import semear
-from db.connection import get_db, Base, engine
+from routers import demanda, simec, censo, usuarios, problema, adminRouter, userRouter
 
 from typing import Annotated
 from schemas import authSchema
 from security import auth
 from utils import responses
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup
-    Base.metadata.create_all(bind=engine)
-    print("✅ Banco de dados inicializado!")
+from db import criar_db
 
-    yield
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     # Startup
+#     Base.metadata.create_all(bind=engine)
+#     print("✅ Banco de dados inicializado!")
 
-    # Shutdown
-    print("❌ Encerrando a aplicação...")
+#     yield
+
+#     # Shutdown
+#     print("❌ Encerrando a aplicação...")
     
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 # origins para CORS
 origins = [
@@ -44,10 +44,6 @@ app.include_router(problema.router)
 app.include_router(adminRouter.router)
 app.include_router(userRouter.router)
 
-# semear.semear_cargos()
-# semear.semear_permissoes()
-# semear.semear_relacionamentos()
-
 #  exemplo de uma rota protegida:
 @app.get(
         '/',
@@ -63,5 +59,16 @@ def teste():
 
 
 if __name__ == '__main__':
+    ##                  ##
+    # criar_db.criar_semear()
+    # criar_db.criar_usuario_teste(
+    #     nome='Usuario teste',
+    #     email='emailteste@gmail.com',
+    #     senha='12345678',
+    #     cpf='12345678910',
+    #     telefone='996436813',
+    #     cargo='superadmin'
+    # )
+    ##                  ##
     import uvicorn
     uvicorn.run(app, host='0.0.0.0', port=8000)
