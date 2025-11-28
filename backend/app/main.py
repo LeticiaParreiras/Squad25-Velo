@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from routers import login, demanda, simec, censo, usuarios, problema, adminRouter, userRouter
+from routers import demanda, simec, censo, usuarios, problema, adminRouter, userRouter
 from db import semear
 from db.connection import get_db, Base, engine
 
