@@ -26,7 +26,7 @@ async def pegar_anos_disponiveis(client: httpx.AsyncClient) -> list[dict[str, st
         return links
 
 def extrair_arquivo_zip(caminho:str, destino: str):
-    with zipfile.ZipFile(BytesIO(caminho)) as arq_zip:
+    with zipfile.ZipFile(caminho) as arq_zip:
         arq_zip.extractall(destino)
 
 async def atualizar(ano: str):
@@ -67,7 +67,7 @@ async def atualizar(ano: str):
             break
         except Exception as e:
             # verificar se ocorreu um erro http aqui, caso contrario, lançar outro erro
-            ...
+            print(e)
 
 async def deletar(ano: str):
     # verificar se existe dados do censo no banco

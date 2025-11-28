@@ -16,10 +16,10 @@ router = APIRouter(
 async def atualizar_simec(background_tasks: BackgroundTasks): # sem auth
     with SessionLocal() as db:
         status = db.query(Controle_simec).first()
-        if not status or status.situacao == 'Cancelado':
-            background_tasks.add_task(simec_serv.atualizar)
-            return {"message": "Atualização do Simec iniciada."}
-        return {"message": "Uma atualização do Simec já está em progresso."}
+        if status and status.situacao == 'Baixando':
+            return {"message": "Uma atualização do Simec já está em progresso."}
+        background_tasks.add_task(simec_serv.atualizar)
+        return {"message": "Atualização do Simec iniciada."}
 
     # verificar padrão de mensagens para as respostas de sucesso depois
 

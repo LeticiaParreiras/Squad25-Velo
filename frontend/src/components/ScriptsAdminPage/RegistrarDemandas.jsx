@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/StylesAdminPage/registrarDemandas.css";
-
+const API_URL = "http://127.0.0.1:8000";
 export default function RegistrarDemandas() {
   const [form, setForm] = useState({
     titulo: "",
@@ -8,7 +8,7 @@ export default function RegistrarDemandas() {
     prioridade: "baixa",
     status: "pendente",
     categoria: "infraestrutura",
-    estimativa_custo: "",
+    estimativa_custo: undefined,
     responsavel: "",
   });
 
@@ -17,11 +17,18 @@ export default function RegistrarDemandas() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Dados enviados:", form);
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const response = await fetch(`${API_URL}/demandas`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(form),
+  });
+
+  alert("Demanda criada!")
+};
   return (
     <div className="registrar-container">
       <h1>Registrar Demanda</h1>

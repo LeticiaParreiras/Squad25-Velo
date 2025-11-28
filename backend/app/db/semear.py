@@ -1,5 +1,7 @@
-from .models import Cargos, Permissoes, Cargo_permissao
+from .models import Cargos, Permissoes, Cargo_permissao, controle_censo
 from .connection import SessionLocal
+import requests
+from bs4 import BeautifulSoup
 
 def semear_permissoes():
     # adicionar mais permissões conforme necessário
@@ -54,3 +56,26 @@ def semear_relacionamentos():
                     db.add(relacionamento)
         db.commit()
     print("Relacionamentos entre cargos e permissões semeados com sucesso.")
+
+def semear_anos_censo():
+    response = requests.get('https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/censo-escolar')
+    soup = BeautifulSoup(response.content, 'html.parser')
+    response.raise_for_status()
+
+    tags_dos_links = soup.find_all('a', class_='external-link')
+
+    # criando uma lista para armazenar os anos e links
+    links = []
+    for tag in tags_dos_links:
+        link = tag['href']
+        ano = link[-8:-4]
+        links.append({'ano': ano, 'link': link})
+
+    anos = [link['ano'] for link in links]
+    
+    with SessionLocal() as db:
+        for ano in anos:
+            db.add(controle_censo.Controle_censo(ano=int(ano), situacao='Não baixado'))
+
+        db.commit()
+    print('anos semeados')

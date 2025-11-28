@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../auth/authContext'
 
 const useLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
-
+    
     try {
       // tranformando para o padrão oauth2
       const formData = new URLSearchParams();
@@ -21,7 +23,7 @@ const useLoginForm = () => {
 
       // trocar a url para o endereço do backend
       // talver criar hooks para uma melhor escalabilidade
-      const response = await fetch("http://127.0.0.1:8000/login", {
+      const response = await fetch("http://127.0.0.1:8000/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -37,7 +39,10 @@ const useLoginForm = () => {
         return;
       }
       
-      navigate("/adminpage");
+      const data = await response.json();
+      console.log(data.user)
+      setUser(data.user)
+      navigate('/adminpage')
 
     } catch (err) {
       console.error("Erro ao fazer login:", err);

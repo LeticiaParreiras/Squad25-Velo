@@ -83,19 +83,18 @@ def tratamentos_simec(df: pd.DataFrame) -> pd.DataFrame:
             )
             df[coluna] = pd.to_numeric(df[coluna], errors='coerce').astype(tipo)
 
-# Conversão de Floats
     for coluna, tipo in flutuantes.items():
         if coluna in df.columns:
+            # Primeiro, normalize para formato americano (ponto como decimal)
             df[coluna] = (
                 df[coluna]
                 .astype(str)
-                .str.replace('.', '', regex=False)            # Remove separador de milhar
-                .str.replace(',', '.', regex=False)           # Troca vírgula por ponto
-                .str.replace(r'[^0-9.-]', '', regex=True)
+                .str.replace(r'\.(?=\d{3}(?:[.,]|$))', '', regex=True)  # Remove pontos de milhar (ex.: 1.234 -> 1234)
+                .str.replace(',', '.', regex=False)  # Troca vírgula por ponto
+                .str.replace(r'[^0-9.-]', '', regex=True)  # Remove caracteres não-numéricos
                 .replace('', np.nan)
             )
             df[coluna] = pd.to_numeric(df[coluna], errors='coerce').astype(tipo)
-
 # Datas
     for coluna in colunas_data:
         if coluna in df.columns:
@@ -125,9 +124,20 @@ def pipeline():
         df = tratamentos_simec(df)
         logger.info("Tratamentos finalizados.")
 
-        ano = int(input("Os dados correspondem a qual ano?"))
+        while True:
+            try:
+                ano = int(input("Os dados correspondem a qual ano? "))
+                break
+            except ValueError:
+                print("Por favor, insira um número válido para o ano.")
 
-        df['ano'] = ano
+        banco.criar_database(
+            db_name=os.getenv("MB_DB_DBNAME"),
+            user=os.getenv("MB_DB_USER"),
+            password=os.getenv("MB_DB_PASS"),
+            host=os.getenv("MB_DB_HOST"),
+            port=os.getenv("MB_DB_PORT")
+        )
 
 
         conn = banco.conectar_bd(
@@ -140,13 +150,13 @@ def pipeline():
         if conn:
             logger.info("Conexão com banco estabelecida.")
             try:
+                banco.criar_tabela_ano(conn)  # <-- Mova para cá (antes de Simec)
+                logger.info("Tabela de ano criada.")
+                
                 banco.criar_tabela_postgres(df, conn, tabela="Simec")
                 logger.info("Tabela criada/validada.")
                 
-                banco.criar_tabela_ano(conn)
-                logger.info("Tabela de ano criada.")
-
-                banco.insert_ano(conn,ano)
+                banco.insert_ano(conn, ano)
                 banco.inserir_dados(df, conn, tabela='Simec')
                 logger.info(f"Foram inseridas {len(df)} linhas.")
                 
