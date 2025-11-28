@@ -1,1 +1,25 @@
 2025-11-16 19:12:06,465 - INFO - Pipeline iniciada.
+2025-11-27 23:20:36,906 - INFO - Pipeline iniciada.
+2025-11-27 23:20:39,081 - INFO - Arquivo convertido e salvo em c:\Users\ramon\OneDrive\Desktop\faculdade\velo\Squad25-Velo\Banco_de_dados\dados\Arquivos\saida\SIMEC_UTF8.csv
+2025-11-27 23:20:40,105 - INFO - Arquivo carregado. Linhas: 30673
+2025-11-27 23:20:42,320 - INFO - Tratamentos finalizados.
+2025-11-27 23:21:11,667 - ERROR - Falha ao conectar no banco.
+2025-11-27 23:21:11,667 - INFO - Pipeline concluída.
+2025-11-27 23:21:28,102 - INFO - Pipeline iniciada.
+2025-11-27 23:21:30,022 - INFO - Arquivo convertido e salvo em c:\Users\ramon\OneDrive\Desktop\faculdade\velo\Squad25-Velo\Banco_de_dados\dados\Arquivos\saida\SIMEC_UTF8.csv
+2025-11-27 23:21:30,691 - INFO - Arquivo carregado. Linhas: 30673
+2025-11-27 23:21:32,929 - INFO - Tratamentos finalizados.
+2025-11-27 23:21:35,862 - ERROR - Falha ao conectar no banco.
+2025-11-27 23:21:35,862 - INFO - Pipeline concluída.
+2025-11-27 23:28:21,868 - INFO - Pipeline iniciada.
+2025-11-27 23:28:23,794 - INFO - Arquivo convertido e salvo em c:\Users\ramon\OneDrive\Desktop\faculdade\velo\Squad25-Velo\Banco_de_dados\dados\Arquivos\saida\SIMEC_UTF8.csv
+2025-11-27 23:28:24,982 - INFO - Arquivo carregado. Linhas: 30673
+2025-11-27 23:28:27,267 - INFO - Tratamentos finalizados.
+2025-11-27 23:28:32,284 - ERROR - Falha ao conectar no banco.
+2025-11-27 23:28:32,284 - INFO - Pipeline concluída.
+2025-11-27 23:29:07,852 - INFO - Pipeline iniciada.
+2025-11-27 23:29:09,992 - INFO - Arquivo convertido e salvo em c:\Users\ramon\OneDrive\Desktop\faculdade\velo\Squad25-Velo\Banco_de_dados\dados\Arquivos\saida\SIMEC_UTF8.csv
+2025-11-27 23:29:11,981 - INFO - Arquivo carregado. Linhas: 30673
+2025-11-27 23:29:13,908 - INFO - Tratamentos finalizados.
+2025-11-27 23:29:17,374 - ERROR - Falha ao conectar no banco.
+2025-11-27 23:29:17,374 - INFO - Pipeline concluída.
