@@ -57,18 +57,22 @@ def teste(t: Annotated[authSchema.UsuarioBase, Depends(auth.autenticar)]):
 def teste():
     return 'acesso para adicionar admin autorizado'
 
+def inicializador():
+    criar_db.criar_semear()
+    criar_db.criar_usuario_teste(
+        nome='Usuario teste',
+        email='emailteste@gmail.com',
+        senha='12345678',
+        cpf='12345678910',
+        telefone='996436813',
+        cargo='superadmin'
+    )
 
 if __name__ == '__main__':
-    ##                  ##
-    # criar_db.criar_semear()
-    # criar_db.criar_usuario_teste(
-    #     nome='Usuario teste',
-    #     email='emailteste@gmail.com',
-    #     senha='12345678',
-    #     cpf='12345678910',
-    #     telefone='996436813',
-    #     cargo='superadmin'
-    # )
-    ##                  ##
+    ## descomente aqui para criar as tabelas e inserir os dados estáticos ##
+    # inicializador()
+
+    ## comente o restante do código ao descomentar o inicializador para que
+    ## somente ele rode
     import uvicorn
     uvicorn.run(app, host='0.0.0.0', port=8000)
