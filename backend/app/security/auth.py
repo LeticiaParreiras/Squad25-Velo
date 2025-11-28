@@ -25,7 +25,7 @@ def gerar_jwt(dados: dict, exp_minutos: int | None = EXP_MINUTOS) -> str:
 def decodificar_jwt(cod_jwt: str):
     return jwt.decode(cod_jwt, key=SECRET_KEY, algorithms=[ALGORITHM])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login", auto_error=False)
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login", auto_error=False)
 
 def obter_token(
     cookie_token: Annotated[str | None, Cookie(alias="access_token")] = None,

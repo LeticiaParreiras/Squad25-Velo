@@ -19,3 +19,7 @@ async def atualizar_simec(ano: str, background_tasks: BackgroundTasks): # sem au
 
     # verificar padrão de mensagens para as respostas de sucesso depois
     return {"message": "Download do Censo iniciado."}
+
+@router.get('/anos')
+def pegar_anos_disponiveis():
+    ...
