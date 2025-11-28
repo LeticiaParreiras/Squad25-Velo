@@ -3,3 +3,4 @@ python-jose[cryptography]
 bcrypt
 aiofiles
 pydantic
+sqlalchemy
