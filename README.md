@@ -83,10 +83,22 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Execute o servidor:
+4. Acesse a pasta app:
 
 ```sh
-fastapi dev app/main.py
+cd app
+```
+
+5. Execute o servidor:
+
+```sh
+python main.py
+```
+
+ou caso queira acessar a documentação automática do fastapi
+
+```sh
+fastapi dev main.py
 ```
 
 ### 🌐 Acessar a API
@@ -124,9 +136,17 @@ ALGORITHM= Algoritmo de criptografia usado para os tokens JWT (ex: HS256).
 
 DB_USER= Nome de usuário do banco de dados
 DB_PASSWORD= Senha do banco de dados
-DB_URL= Endereço do host do banco de dados
+DB_URL= Endereço do host do banco de dados + porta 
 DB_NAME= Nome do banco de dados a ser conectado
 ```
+### 📋 Criar tabelas dos usuarios
+Após preencher as variaveis de ambiente no arquivo .env, vá até o arquivo `main` localizado em `backend\app\main.py` vá até `if __name__ == '__main__':` e retire 
+o comentário da função `inicializador()` esta função irá criar as tabelas de cargos, permissões, usuarios e preenchê-los com dados ficticios
+
+após descomentar a linha inicializadora, recomendamos comentar o restante das linhas dentro do if, para não ocorrer erros ao iniciar o servidor
+
+com isso feito, rode o arquivo `main.py`, após finalizar, comente a linha inicializadora novamente, descomente o restante do código dentro do if e rode de novo
+o arquivo `main.py`. Após estes passos, o servidor do backend em fastAPI deve estar rodando normalmente
 
 ---
 
