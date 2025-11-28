@@ -54,3 +54,6 @@ def semear_relacionamentos():
                     db.add(relacionamento)
         db.commit()
     print("Relacionamentos entre cargos e permissões semeados com sucesso.")
+
+def semear_anos_censo():
+    ...

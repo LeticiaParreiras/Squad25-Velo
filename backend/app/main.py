@@ -36,7 +36,6 @@ app.add_middleware(
     allow_headers=["*"],      # Permite todos os cabeçalhos
 )
 
-app.include_router(login.router)
 app.include_router(demanda.router)
 app.include_router(simec.router)
 app.include_router(censo.router)

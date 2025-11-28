@@ -6,4 +6,3 @@ class Controle_censo(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     ano = Column(String, nullable=False)
     situacao = Column(String, nullable=False)
-    progresso = Column(Integer, nullable=False)
