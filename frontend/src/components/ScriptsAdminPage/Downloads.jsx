@@ -14,26 +14,31 @@ export default function Downloads() {
   // --- Estados do SIMEC ---
   const [statusSimec, setStatusSimec] = useState(null);
   const [loadingSimec, setLoadingSimec] = useState(false);
-
-  // Gera anos de 2024 até 2000
-  const anosDisponiveis = Array.from({ length: 25 }, (_, i) => String(2024 - i));
+  const [anosDisponiveis, setAnosDisponiveis] = useState([]);
 
   // --- EFEITO DE POLLING (Atualização em tempo real) ---
   useEffect(() => {
     // Busca inicial
     fetchCensoStatus();
     fetchSimecStatus();
+    fetchAnosDisponiveis();
 
     // Cria um intervalo para atualizar os dados a cada 3 segundos
     // Isso faz a barra de progresso (MB baixados) atualizar na tela
     const intervalo = setInterval(() => {
-      fetchCensoStatus();
+      // fetchCensoStatus();
       fetchSimecStatus();
     }, 3000);
 
     // Limpa o intervalo ao sair da página
     return () => clearInterval(intervalo);
   }, []);
+
+  const fetchAnosDisponiveis = async () => {
+    const response = await fetch(`${API_URL}/censo/anos`);
+    const data = await response.json()
+    setAnosDisponiveis(data.anos);
+  }
 
   // --- Funções Auxiliares de Fetch ---
   const fetchCensoStatus = async () => {

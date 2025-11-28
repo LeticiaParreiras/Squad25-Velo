@@ -4,6 +4,8 @@ from security.auth import autenticar
 from typing import Annotated
 from services import censo_serv
 from utils.responses import AUTH_RESPONSES
+from db.connection import SessionLocal
+from db.models import Controle_censo
 
 router = APIRouter(
     prefix="/censo",
@@ -22,4 +24,7 @@ async def atualizar_simec(ano: str, background_tasks: BackgroundTasks): # sem au
 
 @router.get('/anos')
 def pegar_anos_disponiveis():
-    ...
+    with SessionLocal() as db:
+        dados = db.query(Controle_censo).all()
+
+        return {'anos': [censo.ano for censo in dados]}

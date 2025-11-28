@@ -4,7 +4,7 @@ from db.connection import SessionLocal
 from db.models import Controle_simec
 from datetime import datetime
 import os
-from .db import codigo
+# from .db import codigo
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SAIDA = os.path.join(BASE_DIR, 'db')

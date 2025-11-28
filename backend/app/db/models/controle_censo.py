@@ -4,5 +4,5 @@ from sqlalchemy import Column, String, Integer
 class Controle_censo(Base):
     __tablename__ = 'Controle_censo'
     id = Column(Integer, primary_key=True, nullable=False)
-    ano = Column(String, nullable=False)
+    ano = Column(Integer, nullable=False)
     situacao = Column(String, nullable=False)
