@@ -228,3 +228,64 @@
   background: #2974a4; /* Azul mais escuro no hover */
   box-shadow: 0 6px 12px rgba(50, 130, 184, 0.4);
 }
+
+@media (max-width: 768px) {
+
+  /* Espaçamento geral */
+  .usuarios-container {
+    padding: 0px 5%;
+    margin-top: 80px;
+  }
+
+  /* Centraliza tudo */
+  h1 {
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
+  .page-description {
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+
+  /* CONTROLES: Busca e Filtro em coluna */
+  .controle-tabela {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  /* Campo de busca ocupa 100% */
+  .busca-input-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Filtro centralizado */
+  .filtro-wrapper {
+    justify-content: center;
+  }
+
+  /* TABELA COM SCROLL HORIZONTAL */
+  .tabela-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .tabela-usuarios {
+    min-width: 700px; /* força o scroll em telas menores */
+  }
+
+  /* Botões dentro das células ocupam menos espaço */
+  .acoes button {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    gap: 4px;
+  }
+
+  /* Botão ADD ocupa toda a largura */
+  .btn-add {
+    width: 100%;
+    justify-content: center;
+  }
+}

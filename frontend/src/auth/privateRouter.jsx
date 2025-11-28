@@ -10,10 +10,11 @@ const PrivateRoute = () => {
   }
 
   // commente essas linhas para desativar a autenticação
+
   if (!user) {
     return <Navigate to="/" replace />;
   }
-  //
+
   return <Outlet />;
 };
 

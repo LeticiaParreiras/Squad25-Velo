@@ -115,3 +115,54 @@
 .btn-download:hover {
     background: #2974a4; 
 }
+
+@media (max-width: 768px) {
+
+    /* Ajusta container principal */
+    .auditoria-container {
+        padding: 0px 5%;
+        margin-left: 0;
+        margin-top: 80px;
+    }
+
+    .auditoria-container h1 {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    /* Cards empilham no mobile */
+    .historico-cards-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Itens de histórico com texto mais proporcional */
+    .historico-item {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+
+    /* Botões "ver mais" centralizados */
+    .ver-mais-wrapper {
+        margin: 20px 0;
+    }
+
+    .btn-ver-mais {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Botões de download: agora coluna, centralizados */
+    .download-buttons-wrapper {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .btn-download {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+    }
+}

@@ -1,13 +1,36 @@
 import pandas as pd
 import psycopg2
+import unicodedata
+import re
 from psycopg2 import Error
 from psycopg2 import sql
 import psycopg2.extras
 
 
-# -------------------------------------------
-# 1. Criar banco de dados (caso não exista)
-# -------------------------------------------
+def formatar_colunas(df: pd.DataFrame):
+    """
+    Remove acentos, caracteres especiais, substitui espaços por underline,
+    remove símbolos inválidos e converte tudo para snake_case.
+    """
+    novas_colunas = []
+
+    for col in df.columns:
+
+        col_formatada = unicodedata.normalize('NFKD', col)
+        col_formatada = col_formatada.encode('ASCII', 'ignore').decode('utf-8')
+
+        col_formatada = col_formatada.lower()
+        col_formatada = re.sub(r'[^a-z0-9]+', '_', col_formatada)
+
+        col_formatada = re.sub(r'_+', '_', col_formatada)
+
+        col_formatada = col_formatada.strip('_')
+
+        novas_colunas.append(col_formatada)
+
+    df.columns = novas_colunas
+    return df
+
 def criar_database(db_name, user, password, host, port='5432'):
     """
     Cria um banco de dados no PostgreSQL caso ele ainda não exista.

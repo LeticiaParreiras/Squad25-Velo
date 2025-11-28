@@ -1,4 +1,5 @@
 import os
+import csv
 import pandas as pd
 import numpy as np
 import banco
@@ -13,21 +14,48 @@ SAIDA_FILE = os.path.join(BASE_DIR, 'Arquivos', 'saida', 'SIMEC_UTF8.csv')
 load_dotenv()
 
 
-# Conversor latin1 -> UTF8
-def conversor_utf8(ENTRADA, SAIDA_FILE):
-    # garante que a pasta de saida exista
-    out_dir = os.path.dirname(SAIDA_FILE)
-    os.makedirs(out_dir, exist_ok=True)
+def conversor_utf8(entrada, saida):
+    """
+    Abre o CSV linha a linha, corrige quebras, remove aspas quebradas
+    e salva um CSV limpo e seguro para o Pandas.
+    """
 
-    df = pd.read_csv(ENTRADA, encoding='latin1', sep=';', quotechar='"', low_memory=False)
-    df.to_csv(SAIDA_FILE, index=False, encoding='utf-8')
-    print(f"Conversão concluída! Arquivo salvo em: {SAIDA_FILE}")
-    return SAIDA_FILE
+    print("⏳ Limpando arquivo... isso pode levar alguns segundos...")
+
+    with open(entrada, "r", encoding="latin1", errors="ignore") as f_in, \
+         open(saida, "w", encoding="utf-8", newline="") as f_out:
+
+        writer = csv.writer(f_out, delimiter=";", quoting=csv.QUOTE_MINIMAL)
+
+        for linha in f_in:
+            linha = linha.strip()
+
+            # Remove aspas soltas que quebram o CSV
+            linha = linha.replace('""', '"').replace('" "', '"')
+
+            # Converte vírgula decimal para ponto se necessário
+            # (opcional — só se houver números tipo 1,23)
+            # linha = linha.replace(",", ".")
+
+            campos = linha.split(";")
+
+            # Remove campos gigantescos ou bugados
+            campos = [c[:500] for c in campos]
+
+            writer.writerow(campos)
+
+    print(f"✔ Arquivo limpo salvo em: {saida}")
+    return saida
+
 
 
 #Lê o CSV
-def ler(SAIDA_FILE) -> pd.DataFrame:
-    return pd.read_csv(SAIDA_FILE, encoding='utf-8')
+def ler(saida) -> pd.DataFrame:
+    return pd.read_csv(saida, 
+                       encoding='utf-8',
+                       sep=';',
+                       on_bad_lines= 'skip'
+                       )
 
 
 def tratamentos_simec(df: pd.DataFrame) -> pd.DataFrame:
@@ -119,6 +147,7 @@ def pipeline():
         logger.info(f"Arquivo convertido e salvo em {arquivo_saida}")
 
         df = ler(arquivo_saida)
+        df = banco.formatar_colunas(df)
         logger.info(f"Arquivo carregado. Linhas: {len(df)}")
 
         df = tratamentos_simec(df)
