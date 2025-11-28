@@ -12,10 +12,11 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 #navlogo {
+  text-align: center;
   font-weight: 700;
   font-size: 1.5rem;
   display: flex;

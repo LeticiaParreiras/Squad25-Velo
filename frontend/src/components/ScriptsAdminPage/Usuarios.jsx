@@ -85,7 +85,7 @@ export default function Usuarios() {
           </select>
         </div>
       </div>
-      
+      <div class="tabela-wrapper">
       <table className="tabela-usuarios">
         <thead>
           <tr>
@@ -129,7 +129,7 @@ export default function Usuarios() {
              </tr>
           )}
         </tbody>
-      </table>
+      </table></div>
 
       <button className="btn-add">
         <FiPlus /> Adicionar usuário

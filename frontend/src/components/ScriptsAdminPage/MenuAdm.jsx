@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+// Definições de Ícones (Mantidas como no original, aqui para completude)
 const IconDashboard = (props) => (
   <svg
     {...props}
@@ -9,7 +10,6 @@ const IconDashboard = (props) => (
     strokeWidth={1.5}
     stroke="currentColor"
   >
-    {/* Usando um ícone de 'quadrados' (grid) para representar o Dashboard */}
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -22,7 +22,6 @@ const IconDashboard = (props) => (
     />
   </svg>
 );
-// Icone original: IconBars (Menu) -> IconBars3 (Heroicons: Menu 3-barras)
 const IconBars = (props) => (
   <svg
     {...props}
@@ -39,7 +38,6 @@ const IconBars = (props) => (
     />
   </svg>
 );
-// Icone original: IconTimes (Fechar) -> IconX (Heroicons: X)
 const IconTimes = (props) => (
   <svg
     {...props}
@@ -52,11 +50,10 @@ const IconTimes = (props) => (
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M15.75 19.5 8.25 12l7.5-7.5"
+      d="M6 18 18 6M6 6l12 12"
     />
   </svg>
 );
-// Icone original: IconUsers (Usuários) -> IconUsers (Heroicons)
 const IconUsers = (props) => (
   <svg
     {...props}
@@ -73,7 +70,6 @@ const IconUsers = (props) => (
     />
   </svg>
 );
-// Icone original: IconUserShield (Administradores) -> IconKey (Heroicons: Chave) ou IconUserGroup
 const IconKey = (props) => (
   <svg
     {...props}
@@ -90,7 +86,6 @@ const IconKey = (props) => (
     />
   </svg>
 );
-// Icone original: IconClipboardList (Auditoria) -> IconClipboardDocumentList (Heroicons: Lista de documentos)
 const IconClipboardList = (props) => (
   <svg
     {...props}
@@ -107,7 +102,6 @@ const IconClipboardList = (props) => (
     />
   </svg>
 );
-// Icone original: IconDownload (Downloads gerais) -> IconCloudArrowDown (Heroicons: Nuvem com seta para baixo)
 const IconDownload = (props) => (
   <svg
     {...props}
@@ -124,7 +118,6 @@ const IconDownload = (props) => (
     />
   </svg>
 );
-// Icone original: IconCogs (Controle de Informação) -> IconCog6Tooth (Heroicons: Engrenagem 6-dentes)
 const IconCogs = (props) => (
   <svg
     {...props}
@@ -160,14 +153,14 @@ const IconLogout = (props) => (
 );
 
 export default function MenuAdm() {
-  // Estado para controlar se a sidebar está aberta (true) ou fechada (false)
-  const [isOpen, setIsOpen] = useState(true);
+  // 💡 ESTADO: Inicia fechado (false) para que no mobile comece oculto, e no desktop, fechado (apenas ícones).
+  const [isOpen, setIsOpen] = useState(false); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Define a classe CSS com base no estado para controlar a largura
+  // Define a classe CSS com base no estado para controlar a largura/posição.
   const containerClass = isOpen
     ? "menu-container open"
     : "menu-container closed";
@@ -175,17 +168,19 @@ export default function MenuAdm() {
   return (
     <>
       <style>{`
-        /* Container da Sidebar */
+        /* ------------------------------------- */
+        /* --- ESTILOS PADRÃO (DESKTOP) --- */
+        /* ------------------------------------- */
+        
         .menu-container {
-          /* Posicionamento Fixo na lateral esquerda */
           position: fixed;
           top: 0;
           left: 0;
           height: 100%;
           padding-top: 50px; 
-          background: #0B3C5D; /* Azul escuro/cinza moderno para contraste */
+          background: #0B3C5D;
           color: #ecf0f1; 
-          transition: width 0.3s ease; /* Transição suave na abertura/fechamento */
+          transition: width 0.3s ease, left 0.3s ease; /* Adicionado 'left' para mobile */
           z-index: 1000;
           display: flex;
           flex-direction: column;
@@ -204,30 +199,25 @@ export default function MenuAdm() {
 
         /* Botão de Alternar (Toggle) */
         .toggle-btn {
-          position: absolute;
+          position: fixed; /* Mantenho fixed para mobile, ajusto as coordenadas em desktop */
           top: 20px; 
-          right: -40px; /* Posiciona fora da sidebar */
-          background: #3282b8; /* Cor original */
+          right: -49px; /* Posição escondida padrão */
+          background: #3282b8;
           color: white;
           border: none;
           padding: 8px 12px;
           border-radius: 0 5px 5px 0;
           cursor: pointer;
           font-size: 1.3rem; 
-          transition: right 0.3s ease, background-color 0.2s ease;
+          transition: right 0.3s ease, left 0.3s ease, background-color 0.2s ease;
           display: flex;
           align-items: center;
           justify-content: center;
+          z-index: 5000; /* Alto z-index para garantir visibilidade */
         }
-
-        /* Reposiciona o botão de toggle para dentro da sidebar quando fechada */
-        .menu-container.closed .toggle-btn {
-          right: 15px;
-          border-radius: 5px;
-        }
-
+        
         .toggle-btn:hover {
-          background: #2974a4; /* Tom mais escuro da cor original */
+          background: #2974a4;
         }
 
         /* Título e Cabeçalho */
@@ -246,7 +236,6 @@ export default function MenuAdm() {
           white-space: nowrap;
         }
 
-        /* Container de Botões */
         .menu-buttons {
           width: 100%;
           display: flex;
@@ -255,7 +244,6 @@ export default function MenuAdm() {
           padding: 0 15px; 
         }
 
-        /* Estilo do Botão (Link) */
         .menu-btn {
           display: flex;
           align-items: center; 
@@ -272,22 +260,19 @@ export default function MenuAdm() {
         }
 
         .menu-btn:hover {
-          background: #0d5280ff; /* Fundo levemente mais claro no hover */
+          background: #0d5280ff;
           color: #ecf0f1; 
         }
 
-        /* Estilo do Ícone */
         .menu-icon {
-          /* Para ícones Heroicons, usamos 'stroke' para a cor */
           stroke: currentColor; 
-          fill: none; /* Heroicons são geralmente ícones de linha */
-          width: 1.3rem; /* Tamanho do ícone */
+          fill: none;
+          width: 1.3rem;
           height: 1.3rem;
           min-width: 25px;
           text-align: center; 
         }
 
-        /* Estilo do Texto do Menu */
         .menu-text {
           white-space: nowrap;
           overflow: hidden;
@@ -296,31 +281,106 @@ export default function MenuAdm() {
           font-weight: 500;
         }
 
-        /* Oculta o texto quando a sidebar está fechada */
+        /* Oculta o texto quando a sidebar está fechada (DESKTOP) */
         .menu-container.closed .menu-text {
           display: none;
         }
 
-        /* Ajusta o alinhamento central para ícones quando fechado */
+        /* Ajusta o alinhamento central para ícones quando fechado (DESKTOP) */
         .menu-container.closed .menu-btn {
           justify-content: center; 
           padding: 12px 0; 
         }
-      `}</style>
-      <aside className={containerClass}>
-        {/* Botão de Toggle para abrir/fechar a sidebar */}
-        <button
-          className="toggle-btn"
-          onClick={toggleMenu}
-          title={isOpen ? "Fechar Menu" : "Abrir Menu"}
-        >
-          {isOpen ? (
-            <IconTimes className="menu-icon" />
-          ) : (
-            <IconBars className="menu-icon" />
-          )}
-        </button>
+        
+        /* Reposiciona o botão de toggle para dentro da sidebar quando fechada (DESKTOP) */
+        .menu-container.closed .toggle-btn {
+          right: 15px;
+          border-radius: 5px;
+          left: auto;
+        }
+        
+        /* Oculta o botão quando o menu está totalmente aberto (DESKTOP) */
+        .menu-container.open .toggle-btn {
+          right: -49px; 
+          left: auto;
+          border-radius: 0 5px 5px 0;
+        }
 
+
+        /* ------------------------------------- */
+        /* --- RESPONSIVIDADE (MOBILE: <= 768px) --- */
+        /* ------------------------------------- */
+        @media (max-width: 768px) {
+            
+            /* 1. Oculta a sidebar fora da tela */
+            .menu-container {
+                left: -250px; /* Posição inicial: totalmente escondida */
+                width: 250px !important; /* Sempre usa a largura completa */
+                box-shadow: none; 
+                padding-top: 80px; /* Espaço para o botão de toggle */
+            }
+
+            /* 2. Mostra a sidebar (transição) quando está 'open' */
+            .menu-container.open {
+                left: 0; /* Desliza a sidebar para dentro */
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); 
+            }
+            
+            /* 3. Botão Toggle: Fixo no canto superior esquerdo */
+            .toggle-btn {
+                position: fixed;
+                top: 15px; 
+                left: 15px; 
+                right: auto !important; /* Desativa a regra de 'right' do desktop */
+                border-radius: 5px;
+                display: flex; /* Garante que o botão esteja sempre visível */
+            }
+
+            /* 4. Garante que o texto e título sempre apareçam em mobile, pois só abrimos ele no estado 'open' */
+            .menu-container .menu-text {
+                display: initial; 
+            }
+            
+            /* Remove a regra de alinhamento central forçado em mobile */
+            .menu-container.closed .menu-btn {
+                justify-content: flex-start; 
+                padding: 12px 15px; 
+            }
+        }
+        
+        /* ------------------------------------- */
+        /* --- RESPONSIVIDADE (DESKTOP: > 768px) --- */
+        /* ------------------------------------- */
+        @media (min-width: 769px) {
+             /* Reseta o posicionamento da sidebar para o comportamento desktop */
+            .menu-container {
+                left: 0 !important; 
+                width: 70px; /* Começa fechado (pois useState(false)) */
+            }
+
+            /* Garante que o botão de toggle volte a controlar a largura do menu (70px vs 250px) */
+             .menu-container.closed {
+                width: 70px; 
+            }
+        }
+      `}</style>
+
+      {/* 🚀 BOTÃO TOGGLE (Deve ficar FORA da tag <aside> para ser sempre fixo e visível) */}
+      <button
+        className="toggle-btn"
+        onClick={toggleMenu}
+        title={isOpen ? "Fechar Menu" : "Abrir Menu"}
+      >
+        {isOpen ? (
+          <IconTimes className="menu-icon" /> // Ícone X quando Aberto
+        ) : (
+          <IconBars className="menu-icon" /> // Ícone Hambúrguer quando Fechado
+        )}
+      </button>
+
+      {/* A Sidebar <aside> */}
+      <aside className={containerClass}>
+        
         <div className="menu-header">
           {/* O título só aparece quando o menu está aberto */}
           {isOpen && <h2 className="menu-title">Menu</h2>}
@@ -330,13 +390,13 @@ export default function MenuAdm() {
           {/* 🚀 Dashboard */}
           <a href="/adminpage/dashboard" className="menu-btn" title="Dashboard">
             <IconDashboard className="menu-icon" />
-            {isOpen && <span className="menu-text">Dashboard</span>}
+            <span className="menu-text">Dashboard</span>
           </a>
 
           {/* Usuários */}
           <a href="/adminpage/usuarios" className="menu-btn" title="Usuários">
             <IconUsers className="menu-icon" />
-            {isOpen && <span className="menu-text">Usuários</span>}
+            <span className="menu-text">Usuários</span>
           </a>
 
           {/* Administradores */}
@@ -346,13 +406,13 @@ export default function MenuAdm() {
             title="Administradores"
           >
             <IconKey className="menu-icon" />
-            {isOpen && <span className="menu-text">Administradores</span>}
+            <span className="menu-text">Administradores</span>
           </a>
 
           {/* Auditoria */}
           <a href="/adminpage/auditoria" className="menu-btn" title="Auditoria">
             <IconClipboardList className="menu-icon" />
-            {isOpen && <span className="menu-text">Auditoria</span>}
+            <span className="menu-text">Auditoria</span>
           </a>
 
           {/* Downloads gerais */}
@@ -362,7 +422,7 @@ export default function MenuAdm() {
             title="Downloads gerais"
           >
             <IconDownload className="menu-icon" />
-            {isOpen && <span className="menu-text">Downloads gerais</span>}
+            <span className="menu-text">Downloads gerais</span>
           </a>
 
           {/* Controle de Informação */}
@@ -372,9 +432,7 @@ export default function MenuAdm() {
             title="Controle de Informação"
           >
             <IconCogs className="menu-icon" />
-            {isOpen && (
-              <span className="menu-text">Controle de Informação</span>
-            )}
+            <span className="menu-text">Controle de Informação</span>
           </a>
 
           {/* ➕ Registrar Demanda */}
@@ -397,7 +455,7 @@ export default function MenuAdm() {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            {isOpen && <span className="menu-text">Registrar demanda</span>}
+            <span className="menu-text">Registrar demanda</span>
           </a>
 
           {/* 🔍 Consultar Demandas */}
@@ -420,17 +478,18 @@ export default function MenuAdm() {
                 d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm6.75-1.5L21 21"
               />
             </svg>
-            {isOpen && <span className="menu-text">Consultar demandas</span>}
+            <span className="menu-text">Consultar demandas</span>
           </a>
 
+          {/* Sair */}
           <a
             href="/logout"
             className="menu-btn"
             title="Sair do sistema"
-            style={{ color: "#e74c3c" }} 
+            style={{ color: "#e74c3c" }}
           >
             <IconLogout className="menu-icon" />
-            {isOpen && <span className="menu-text">Sair</span>}
+            <span className="menu-text">Sair</span>
           </a>
         </nav>
       </aside>
