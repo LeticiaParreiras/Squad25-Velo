@@ -1,6 +1,11 @@
 from db.connection import Base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Enum
 from sqlalchemy.orm import relationship
+import enum
+class StatusUsuarioEnum(str, enum.Enum):
+    ATIVO = "ativo"
+    INATIVO = "inativo"
+    SUSPENSO = "suspenso"
 
 class Usuario(Base):
     __tablename__ = 'Usuarios'
@@ -10,3 +15,4 @@ class Usuario(Base):
     email = Column(String, unique=True, nullable=False)
     telefone = Column(String, unique=True, nullable=False)
     senha = Column(String, nullable=False)
+    status = Column(Enum(StatusUsuarioEnum), nullable=False)
